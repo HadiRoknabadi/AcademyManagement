@@ -7,12 +7,11 @@ namespace AcademyManagement.Persistence.Contexts
 {
     public class DataBaseContext:DbContext,IDatabaseContext
     {
-        public DataBaseContext(DbContextOptions options):base(options)
+        public DataBaseContext(DbContextOptions<DataBaseContext> options):base(options)
         {
 
         }
 
-        public DbSet<User> Users { get; set; }
 
         protected   override void OnModelCreating(ModelBuilder builder)
         {

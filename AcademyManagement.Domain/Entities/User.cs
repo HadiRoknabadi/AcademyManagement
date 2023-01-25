@@ -1,11 +1,11 @@
 ﻿using AcademyManagement.Domain.Attributes;
+using Microsoft.AspNetCore.Identity;
 
 namespace AcademyManagement.Domain.Entities
 {
     [Auditable]
-    public class User
+    public class User:IdentityUser
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
     }
