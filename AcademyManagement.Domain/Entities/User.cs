@@ -1,5 +1,8 @@
-﻿namespace AcademyManagement.Domain.Entities
+﻿using AcademyManagement.Domain.Attributes;
+
+namespace AcademyManagement.Domain.Entities
 {
+    [Auditable]
     public class User
     {
         public Guid Id { get; set; }
