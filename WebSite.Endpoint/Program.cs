@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AcademyManagement.Persistence.Contexts;
-
+using Microsoft.Data.SqlClient;
+using AcademyManagement.Infrastructure.IdentityConfigs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,15 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
-builder.Services.AddDbContext<IdentityDatabaseContext>(options =>
+builder.Services.AddIdentityService(builder.Configuration);
+
+builder.Services.AddAuthorization();
+
+builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.LoginPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
 });
 
 #endregion
@@ -35,8 +42,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapRazorPages();
 

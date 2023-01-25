@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AcademyManagement.Infrastructure\AcademyManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\AcademyManagement.Persistence\AcademyManagement.Persistence.csproj" />
   </ItemGroup>
 
