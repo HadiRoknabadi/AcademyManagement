@@ -1,0 +1,59 @@
+﻿
+<!-- Header STart -->
+<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky">
+    <div class="container">
+        <!-- Logo container-->
+        <div>
+            <a class="logo" href="/">
+                <img src="" class="l-dark" height="24" alt="">
+                <img src="" class="l-light" height="24" alt="">
+            </a>
+        </div>
+        <div class="buy-button">
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                <a >
+                    <div class="btn btn-primary login-btn-primary"></div>
+                    <div class="btn btn-light login-btn-light"></div>
+                </a>
+            }
+            else
+            {
+                <a >
+                    <div class="btn btn-primary login-btn-primary">ورود </div>
+                    <div class="btn btn-light login-btn-light"> ورود </div>
+                </a>
+            }
+
+        </div><!--end login button-->
+        <!-- End Logo container-->
+        <div class="menu-extras">
+            <div class="menu-item">
+                <!-- Mobile menu toggle-->
+                <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+                <!-- End mobile menu toggle-->
+            </div>
+        </div>
+
+        <div id="navigation">
+            <!-- Navigation Menu-->
+            <ul class="navigation-menu nav-light ">
+                <li><a href="/" class="sub-menu-item">صفحه اصلی </a></li>
+                <li><a href="/Blog" class="sub-menu-item">بلاگ</a></li>
+                <li><a href="/AboutUs" class="sub-menu-item">درباره ما</a></li>
+                <li><a href="/ContactUs" class="sub-menu-item">تماس با ما</a></li>
+            </ul><!--end navigation menu-->
+            <!--end login button-->
+        </div><!--end navigation-->
+    </div><!--end container-->
+</header>
+<!--end header-->
+<!-- Navbar End -->
