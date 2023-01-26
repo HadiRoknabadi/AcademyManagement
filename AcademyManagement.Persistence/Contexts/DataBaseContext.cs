@@ -1,7 +1,8 @@
 ﻿using AcademyManagement.Application.Interfaces.Contexts;
 using AcademyManagement.Domain.Attributes;
 using AcademyManagement.Domain.Entities.Account;
-using AcademyManagement.Persistence.Congigs.PreRegisteration;
+using AcademyManagement.Persistence.Configs.PreRegisteration;
+using AcademyManagement.Persistence.Configs.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Persistence.Contexts
@@ -47,6 +48,8 @@ namespace AcademyManagement.Persistence.Contexts
             #region Account
 
             modelBuilder.ApplyConfiguration(new PreRegisterationConfiguration());
+
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             #endregion
         }

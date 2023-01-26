@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AcademyManagement.Persistence.Congigs.PreRegisteration
+namespace AcademyManagement.Persistence.Configs.PreRegisteration
 {
     public class PreRegisterationConfiguration : IEntityTypeConfiguration<AcademyManagement.Domain.Entities.Account.PreRegisteration>
     {
