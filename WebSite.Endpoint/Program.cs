@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using AcademyManagement.Persistence.Contexts;
-using Microsoft.Data.SqlClient;
 using AcademyManagement.Infrastructure.IdentityConfigs;
+using GoogleReCaptcha.V3.Interface;
+using GoogleReCaptcha.V3;
+using AcademyManagement.Infrastructure.Senders;
+using FluentValidation;
+using AcademyManagement.Application.DTOs.Account;
+using AcademyManagement.Application.DTOs.Common;
+using AcademyManagement.Infrastructure.MappingProfile;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +31,27 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Login";
     options.AccessDeniedPath = "/AccessDenied";
 });
+
+#endregion
+
+#region Config Services
+
+builder.Services.AddScoped<ISenderService, SenderService>();
+builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
+
+#endregion
+
+#region Fluent Validation
+
+builder.Services.AddTransient<IValidator<PreRegisterationDTO>, PreRegisterationDTOValidator>();
+builder.Services.AddTransient<IValidator<CaptchaDTO>, CaptchaDTOValidator>();
+
+
+#endregion
+
+#region Auto Mapper
+
+builder.Services.AddAutoMapper(typeof(PreRegisterationMappingProfile));
 
 #endregion
 

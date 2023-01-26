@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -15,6 +16,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="GoogleReCaptcha.V3" Version="1.3.1" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AcademyManagement.Infrastructure\AcademyManagement.Infrastructure.csproj" />

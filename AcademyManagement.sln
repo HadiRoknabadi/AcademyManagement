@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyManagement.Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSite.Endpoint", "WebSite.Endpoint\WebSite.Endpoint.csproj", "{2FE2D9A5-A448-427A-9EB6-EC441BB4A890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.EndPoint", "Admin.EndPoint\Admin.EndPoint.csproj", "{F24CE1AF-CA5C-426B-A8B8-59C0F470DCB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.EndPoint", "Admin.EndPoint\Admin.EndPoint.csproj", "{F24CE1AF-CA5C-426B-A8B8-59C0F470DCB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,7 @@
 ﻿using AcademyManagement.Application.Interfaces.Contexts;
 using AcademyManagement.Domain.Attributes;
-using AcademyManagement.Domain.Entities;
+using AcademyManagement.Domain.Entities.Account;
+using AcademyManagement.Persistence.Congigs.PreRegisteration;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Persistence.Contexts
@@ -13,8 +14,18 @@ namespace AcademyManagement.Persistence.Contexts
         }
 
 
-        protected   override void OnModelCreating(ModelBuilder builder)
+        #region Account
+
+        public DbSet<PreRegisteration> PreRegisterations { get; set; }
+
+        #endregion
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            GetEntitiesConfigs(builder);
+
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 if(entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute),true).Length > 0)
@@ -28,6 +39,16 @@ namespace AcademyManagement.Persistence.Contexts
             
 
             base.OnModelCreating(builder);
+        }
+
+
+        private static void GetEntitiesConfigs(ModelBuilder modelBuilder)
+        {
+            #region Account
+
+            modelBuilder.ApplyConfiguration(new PreRegisterationConfiguration());
+
+            #endregion
         }
 
         public override int SaveChanges()

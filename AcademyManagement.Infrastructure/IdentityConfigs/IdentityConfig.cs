@@ -1,4 +1,4 @@
-﻿using AcademyManagement.Domain.Entities;
+﻿using AcademyManagement.Domain.Entities.Account;
 using AcademyManagement.Persistence.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

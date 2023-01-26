@@ -1,0 +1,162 @@
+﻿@page "PreRegisteration"
+@model WebSite.Endpoint.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "پیش ثبت نام";
+}
+@*
+<div class="back-to-home rounded d-none d-sm-block">
+    <a href="/" class="btn btn-icon btn-soft-primary"><i data-feather="home" class="icons"></i></a>
+</div>
+<section class="bg-auth-home d-table w-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6">
+                <div class="me-lg-5">
+                    <img src="/Site/images/user/signup.svg" class="img-fluid d-block mx-auto" alt="">
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6">
+                <div class="card shadow rounded border-0">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">ثبت نام </h4>
+                        <Alert type="warning" message="این فرم به منزله پیش ثبت نام بوده و به منظور ثبت نام نهایی باید به @siteSetting.SiteName مراجه کنید"></Alert>
+                        <form class="login-form mt-4" asp-controller="Account" asp-action="PreRegistration" method="post">
+                            <partial name="_CaptchaInput" />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نام <span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="user" class="fea icon-sm icons"></i>
+                                            <input asp-for="Name" class="form-control ps-5" placeholder="نام">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نام خانوادگی  <span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="user-check" class="fea icon-sm icons"></i>
+                                            <input asp-for="Family" class="form-control ps-5" placeholder="نام خانوادگی">
+                                            <span asp-validation-for="Family" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">مقطع تحصیلی شما<span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <select class="form-select form-control" aria-label="Default select example" asp-for="Grade">
+                                                <option selected="" value="">این منوی انتخاب را باز کنید</option>
+                                                <option value="دبستان">دبستان</option>
+                                                <option value="دوره اول راهنمایی">دوره اول راهنمایی</option>
+                                                <option value="دوره دوم راهنمایی">دوره دوم راهنمایی</option>
+                                                <option value="دانشگاه و مقاطع بالاتر">دانشگاه و مقاطع بالاتر</option>
+                                            </select>
+                                            <span asp-validation-for="Grade" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">شماره موبایل<span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="smartphone" class="fea icon-sm icons"></i>
+                                            <input asp-for="PhoneNumber" class="form-control ps-5" placeholder="شماره موبایل (*********09)">
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">آیا قبلا به کلاس زبان رفته اید؟</label>
+                                        <div class="form-check form-switch">
+                                            <input asp-for="WentToEnglishClassBefore" onchange="DisplayDiv()" class="form-check-input" type="checkbox" style="cursor:pointer">
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-12" id="termDiv" style="display:none">
+                                    <div class="mb-3">
+                                        <label class="form-label">چند ترم خواندید؟</label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="user-check" class="fea icon-sm icons"></i>
+                                            <input type="number" min="1" asp-for="HowManyTermDidYouPass" class="form-control ps-5" placeholder="چند ترم خواندید ؟">
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-md-12" id="bookDiv" style="display:none">
+                                    <div class="mb-3">
+                                        <label class="form-label">چه کتابهایی خواندید؟</label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="book" class="fea icon-sm icons"></i>
+                                            <input asp-for="TheBookYouHaveReadInEnglishClasss" class="form-control ps-5" placeholder="چه کتابهایی خواندید؟">
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">توضیحات دلخواه</label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="message-circle" class="fea icon-sm icons"></i>
+                                            <textarea asp-for="Description" class="form-control ps-5"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+
+                                <div class="col-md-12">
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary">ثبت نام </button>
+                                    </div>
+                                </div><!--end col-->
+
+
+                                <div class="mx-auto">
+                                    <p class="mb-0 mt-3"><small class="text-dark me-2"> حساب دارید؟</small> <a asp-controller="Account" asp-action="Login" class="text-dark fw-bold">وارد شوید </a></p>
+                                </div>
+                            </div><!--end row-->
+                        </form>
+                    </div>
+                </div>
+            </div> <!--end col-->
+        </div><!--end row-->
+    </div> <!--end container-->
+</section><!--end section-->
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts" />
+
+    <script>
+        var wentToEnglishClass = document.getElementById('WentToEnglishClassBefore');
+        if (wentToEnglishClass.checked == true) {
+            $("#bookDiv").slideToggle(1000);
+            $("#termDiv").slideToggle(1000);
+        }
+        function DisplayDiv() {
+
+            if (wentToEnglishClass.checked == true) {
+                $("#bookDiv").slideToggle(1000);
+                $("#termDiv").slideToggle(1000);
+            }
+            else {
+                $("#bookDiv").hide(1000);
+                $("#termDiv").hide(1000);
+            }
+        }
+
+    </script>
+}
+
+*@
