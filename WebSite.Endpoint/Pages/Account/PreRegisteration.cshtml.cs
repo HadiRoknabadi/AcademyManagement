@@ -1,5 +1,6 @@
 using AcademyManagement.Application.DTOs.Account;
 using AcademyManagement.Application.Services.Interfaces;
+using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,11 +13,15 @@ namespace WebSite.Endpoint.Pages.Account
         #region Constructor
 
         private readonly IPreRegisterationService _preRegisterationService;
+        private readonly ICaptchaValidator _captchaValidator;
 
-        public PreRegisterationModel(IPreRegisterationService preRegisterationService)
+        public PreRegisterationModel(IPreRegisterationService preRegisterationService, ICaptchaValidator captchaValidator)
         {
             _preRegisterationService = preRegisterationService;
+            _captchaValidator = captchaValidator;
         }
+
+
 
         #endregion
 
@@ -34,14 +39,20 @@ namespace WebSite.Endpoint.Pages.Account
 
         public async Task<IActionResult> OnPost()
         {
-            if(ModelState.IsValid)
+            if (!await _captchaValidator.IsCaptchaPassedAsync(PreRegisterationDTO.Captcha))
             {
-                var res=await _preRegisterationService.AddPreRegisteration(PreRegisterationDTO);
-
                 
+                return Page();
             }
 
-            var errors=ModelState.Values.SelectMany(e=>e.Errors);
+            if (ModelState.IsValid)
+            {
+                var res = await _preRegisterationService.AddPreRegisteration(PreRegisterationDTO);
+
+
+            }
+
+            var errors = ModelState.Values.SelectMany(e => e.Errors);
 
             return Page();
         }
