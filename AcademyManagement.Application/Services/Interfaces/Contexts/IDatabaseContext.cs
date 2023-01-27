@@ -1,7 +1,7 @@
 ﻿using AcademyManagement.Domain.Entities.Account;
 using Microsoft.EntityFrameworkCore;
 
-namespace AcademyManagement.Application.Interfaces.Contexts
+namespace AcademyManagement.Application.Services.Interfaces.Contexts
 {
     public interface IDatabaseContext
     {

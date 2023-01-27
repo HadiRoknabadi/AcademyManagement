@@ -8,6 +8,10 @@ using FluentValidation;
 using AcademyManagement.Application.DTOs.Account;
 using AcademyManagement.Application.DTOs.Common;
 using AcademyManagement.Infrastructure.MappingProfile;
+using AcademyManagement.Application.Services.Interfaces;
+using AcademyManagement.Application.Services.Implementations;
+using FluentValidation.AspNetCore;
+using AcademyManagement.Application.Services.Interfaces.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +39,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 #endregion
 
 #region Config Services
-
+builder.Services.AddScoped<IDatabaseContext,DataBaseContext>();
+builder.Services.AddScoped<IPreRegisterationService, PreRegisterationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISenderService, SenderService>();
 builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
@@ -43,6 +49,7 @@ builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
 #region Fluent Validation
 
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddTransient<IValidator<PreRegisterationDTO>, PreRegisterationDTOValidator>();
 builder.Services.AddTransient<IValidator<CaptchaDTO>, CaptchaDTOValidator>();
 

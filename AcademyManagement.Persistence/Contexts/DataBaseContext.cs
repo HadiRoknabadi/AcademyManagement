@@ -1,4 +1,4 @@
-﻿using AcademyManagement.Application.Interfaces.Contexts;
+﻿using AcademyManagement.Application.Services.Interfaces.Contexts;
 using AcademyManagement.Domain.Attributes;
 using AcademyManagement.Domain.Entities.Account;
 using AcademyManagement.Persistence.Configs.PreRegisteration;
