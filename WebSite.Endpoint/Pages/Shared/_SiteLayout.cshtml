@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var dontShowHeader = false;
+    var dontShowFooter = false;
+
+    if (ViewData["DontShowHeader"] != null)
+    {
+        dontShowHeader = (bool)ViewData["DontShowHeader"];
+    }
+    if (ViewData["DontShowFooter"] != null)
+    {
+        dontShowFooter = (bool)ViewData["DontShowFooter"];
+    }
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 
@@ -20,14 +35,22 @@
     </div> -->
     <!-- Loader -->
 
-
-        @await Component.InvokeAsync("SiteHeader")
+        @if(dontShowHeader==false)
+        {
+            @await Component.InvokeAsync("SiteHeader")
+        }
+        
 
 
 
     @RenderBody()
 
-    @await Component.InvokeAsync("SiteFooter")
+    @if(dontShowFooter==false)
+    {
+        @await Component.InvokeAsync("SiteFooter")
+    }
+
+    
     <!-- Back to top -->
     <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
     <!-- Back to top -->
