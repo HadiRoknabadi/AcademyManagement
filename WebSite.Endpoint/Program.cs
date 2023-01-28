@@ -12,6 +12,8 @@ using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Application.Services.Implementations;
 using FluentValidation.AspNetCore;
 using AcademyManagement.Application.Services.Interfaces.Contexts;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Login";
     options.AccessDeniedPath = "/AccessDenied";
 });
+
+#endregion
+
+#region Html Encoder
+
+builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
 
 #endregion
 

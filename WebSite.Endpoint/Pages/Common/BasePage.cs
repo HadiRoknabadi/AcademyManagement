@@ -4,14 +4,14 @@ namespace WebSite.Endpoint.Pages.Common
 {
     public class BasePage:PageModel
     {
-        protected string Toast_ErrorMessage = "Toast_ErrorMessage";
-        protected string Toast_SuccessMessage = "Toast_SuccessMessage";
-        protected string Toast_InfoMessage = "Toast_InfoMessage";
-        protected string Toast_WarningMessage = "Toast_WarningMessage";
+        protected string Toast_ErrorMessage = "ToastErrorMessage";
+        protected string Toast_SuccessMessage = "ToastSuccessMessage";
+        protected string Toast_InfoMessage = "ToastInfoMessage";
+        protected string Toast_WarningMessage = "ToastWarningMessage";
 
-        protected string SweetAlert_ErrorMessage = "SweetAlert_ErrorMessage";
-        protected string SweetAlert_SuccessMessage = "SweetAlert_SuccessMessage";
-        protected string SweetAlert_InfoMessage = "SweetAlert_InfoMessage";
-        protected string SweetAlert_WarningMessage = "SweetAlert_WarningMessage";
+        protected string SweetAlert_ErrorMessage = "SweetAlertErrorMessage";
+        protected string SweetAlert_SuccessMessage = "SweetAlertSuccessMessage";
+        protected string SweetAlert_InfoMessage = "SweetAlertInfoMessage";
+        protected string SweetAlert_WarningMessage = "SweetAlertWarningMessage";
     }
 }

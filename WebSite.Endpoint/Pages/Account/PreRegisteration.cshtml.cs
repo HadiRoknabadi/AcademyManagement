@@ -3,11 +3,12 @@ using AcademyManagement.Application.Services.Interfaces;
 using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebSite.Endpoint.Pages.Common;
 
 namespace WebSite.Endpoint.Pages.Account
 {
 
-    public class PreRegisterationModel : PageModel
+    public class PreRegisterationModel : BasePage
     {
 
         #region Constructor
@@ -33,8 +34,9 @@ namespace WebSite.Endpoint.Pages.Account
 
         #endregion
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()

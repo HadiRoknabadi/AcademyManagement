@@ -1,42 +1,82 @@
 ﻿@if (
-TempData["SuccessMessage"] != null ||
-TempData["ErrorMessage"] != null ||
-TempData["InfoMessage"] != null ||
-TempData["WarningMessage"] != null
+TempData["ToastSuccessMessage"] != null ||
+TempData["ToastErrorMessage"] != null ||
+TempData["ToastWarningMessage"] != null ||
+TempData["ToastInfoMessage"] != null ||
+TempData["SweetAlertSuccessMessage"] != null ||
+TempData["SweetAlertWarningMessage"] != null ||
+TempData["SweetAlertErrorMessage"] != null ||
+TempData["SweetAlertInfoMessage"] != null 
 )
 {
-    if (TempData["SuccessMessage"] != null)
+    if (TempData["ToastSuccessMessage"] != null)
     {
         <script>
             $(document).ready(function () {
-                ShowMessage('پیغام موفقیت', '@TempData["SuccessMessage"]', 'success');
+                ShowToastMessageNotification('پیغام موفقیت', '@TempData["ToastSuccessMessage"]', 'success');
             });
         </script>
     }
 
-    if (TempData["ErrorMessage"] != null)
+    if (TempData["ToastErrorMessage"] != null)
     {
         <script>
             $(document).ready(function () {
-                ShowMessage('پیغام خطا', '@TempData["ErrorMessage"]', 'error');
+                ShowToastMessageNotification('پیغام خطا', '@TempData["ToastErrorMessage"]', 'error');
             });
         </script>
     }
 
-    if (TempData["WarningMessage"] != null)
+    if (TempData["ToastWarningMessage"] != null)
     {
         <script>
             $(document).ready(function () {
-                ShowMessage('پیغام اخطار', '@TempData["WarningMessage"]', 'warning');
+                ShowToastMessageNotification('پیغام اخطار', '@TempData["ToastWarningMessage"]', 'warning');
             });
         </script>
     }
 
-    if (TempData["InfoMessage"] != null)
+    if (TempData["ToastInfoMessage"] != null)
     {
         <script>
             $(document).ready(function () {
-                ShowMessage('پیغام اطلاعیه', '@TempData["InfoMessage"]', 'info');
+                ShowToastMessageNotification('پیغام اطلاعیه', '@TempData["ToastInfoMessage"]', 'info');
+            });
+        </script>
+    }
+
+    if(TempData["SweetAlertSuccessMessage"]!=null)
+    {
+            <script>
+            $(document).ready(function () {
+                ShowSweetAlertNotification('پیغام موفقیت', '@TempData["SweetAlertSuccessMessage"]', 'success')
+            });
+        </script>
+    }
+
+    if(TempData["SweetAlertWarningMessage"]!=null)
+    {
+            <script>
+            $(document).ready(function () {
+                ShowSweetAlertNotification('پیغام اخطار', '@TempData["SweetAlertWarningMessage"]', 'warning')
+            });
+        </script>
+    }
+
+    if(TempData["SweetAlertErrorMessage"]!=null)
+    {
+            <script>
+            $(document).ready(function () {
+                ShowSweetAlertNotification('پیغام خطا', '@TempData["SweetAlertErrorMessage"]', 'error')
+            });
+        </script>
+    }
+
+    if(TempData["SweetAlertInfoMessage"]!=null)
+    {
+            <script>
+            $(document).ready(function () {
+                ShowSweetAlertNotification('پیغام اطلاعیه', '@TempData["SweetAlertInfoMessage"]', 'info')
             });
         </script>
     }

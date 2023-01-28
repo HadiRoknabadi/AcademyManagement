@@ -1,4 +1,4 @@
-﻿function ShowMessage(title, text, theme) {
+﻿function ShowToastMessageNotification(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
         displayCloseButton: false,
@@ -10,3 +10,14 @@
         message: decodeURI(text)
     });
 }
+
+
+function ShowSweetAlertNotification(title, text, iconName) {
+    console.log("test");
+    swal({
+        title: title !== '' ? title : 'اعلان',
+        icon:iconName !== '' ? iconName : 'success',
+        text:decodeURI(text)
+      });
+}
+
