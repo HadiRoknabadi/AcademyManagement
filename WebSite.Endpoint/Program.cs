@@ -59,6 +59,7 @@ builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddTransient<IValidator<PreRegisterationDTO>, PreRegisterationDTOValidator>();
+builder.Services.AddTransient<IValidator<LoginDTO>, LoginDTOValidator>();
 builder.Services.AddTransient<IValidator<CaptchaDTO>, CaptchaDTOValidator>();
 
 

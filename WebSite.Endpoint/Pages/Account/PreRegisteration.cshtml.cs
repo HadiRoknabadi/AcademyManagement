@@ -34,9 +34,9 @@ namespace WebSite.Endpoint.Pages.Account
 
         #endregion
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
-            return Page();
+
         }
 
         public async Task<IActionResult> OnPost()
@@ -64,9 +64,6 @@ namespace WebSite.Endpoint.Pages.Account
                 }
 
             }
-
-            var errors = ModelState.Values.SelectMany(e => e.Errors);
-
             return Page();
         }
     }

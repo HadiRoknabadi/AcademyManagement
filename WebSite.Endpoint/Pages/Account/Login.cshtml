@@ -1,0 +1,113 @@
+@page "/login/{returnUrl?}"
+@model WebSite.Endpoint.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "ورود";
+    ViewData["DontShowHeader"] = true;
+}
+
+
+<div class="back-to-home rounded d-none d-sm-block">
+    <a href="/" class="btn btn-icon btn-soft-primary"><i data-feather="home" class="icons"></i></a>
+</div>
+
+<section class="bg-home d-flex align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6">
+                <div class="me-lg-5">
+                    <img src="/images/user/login.svg" class="img-fluid d-block mx-auto" alt="">
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6">
+                <div class="card login-page bg-white shadow rounded border-0">
+                    <div class="card-body">
+
+
+                        <h4 class="card-title text-center">وارد شدن </h4>
+                        <form class="login-form mt-4" asp-page="Login"
+                            asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                            <input type="hidden" asp-for="LoginDTO.Captcha" id="captchaInput" />
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">شماره موبایل<span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="user" class="fea icon-sm icons"></i>
+                                            <input asp-for="LoginDTO.PhoneNumber" class="form-control ps-5"
+                                                placeholder="شماره موبایل ( *********09 )" >
+                                            <span asp-validation-for="LoginDTO.PhoneNumber"
+                                                class="text-danger font-size-14px"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">رمز عبور <span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i data-feather="key" class="fea icon-sm icons"></i>
+                                            <input asp-for="LoginDTO.Password" class="form-control ps-5"
+                                                placeholder="رمز عبور " type="password">
+                                            <span asp-validation-for="LoginDTO.Password"
+                                                class="text-danger font-size-14px"></span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input asp-for="LoginDTO.RememberMe" class="form-check-input"
+                                                    type="checkbox">
+                                                <label class="form-check-label" for="flexCheckDefault">مرا به خاطر بسپار
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <p class="forgot-pass mb-0"><a class="text-dark fw-bold">فراموشی رمز عبور؟
+                                            </a></p>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-lg-12 mb-0">
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary">ورود </button>
+                                    </div>
+                                </div><!--end col-->
+
+
+
+                                <div class="col-12 text-center">
+                                    <p class="mb-0 mt-3"><small class="text-dark me-2">حسابی ندارید؟ </small> <a
+                                            asp-page="PreRegisteration" class="text-dark fw-bold">ثبت نام کنید </a></p>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+
+
+                    </div>
+                </div><!---->
+            </div>
+
+
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <partial name="_CaptchaScripts" />
+
+
+}
