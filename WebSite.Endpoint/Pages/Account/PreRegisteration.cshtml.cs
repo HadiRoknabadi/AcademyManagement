@@ -43,7 +43,7 @@ namespace WebSite.Endpoint.Pages.Account
         {
             if (!await _captchaValidator.IsCaptchaPassedAsync(PreRegisterationDTO.Captcha))
             {
-                
+                TempData[Toast_WarningMessage]="کد کپچای شما تایید نشد";
                 return Page();
             }
 
@@ -51,6 +51,17 @@ namespace WebSite.Endpoint.Pages.Account
             {
                 var res = await _preRegisterationService.AddPreRegisteration(PreRegisterationDTO);
 
+                switch(res)
+                {
+                    case AddPreRegisterationResult.Success:
+                        TempData[SweetAlert_SuccessMessage]="ثبت نام با موفقیت انجام شد . آموزشگاه به زودی با شما تماس میگیرد";
+                        return RedirectToPage("/");
+                        
+                        case AddPreRegisterationResult.ExistUser:
+                        TempData[SweetAlert_ErrorMessage]="شما قبلا ثبت نام کردید و امکان ثبت نام مجدد وجود ندارد";
+                        return Redirect("/");
+
+                }
 
             }
 
