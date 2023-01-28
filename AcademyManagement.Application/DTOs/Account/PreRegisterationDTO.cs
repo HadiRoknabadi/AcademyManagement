@@ -51,7 +51,7 @@ namespace AcademyManagement.Application.DTOs.Account
 
             RuleFor(p => p.BookNameReadInEnglishClass).Length(1, 300).WithMessage("نام کتاب نمی تواند بیشتر از 300 کاراکتر باشد");
 
-            RuleFor(p => p.Description).Length(1, 300).NotNull().WithMessage("متن توضیح دلخواه نمی تواند بیشتر از 300 کاراکتر باشد");
+            RuleFor(p => p.Description).Length(1, 300).WithMessage("متن توضیح دلخواه نمی تواند بیشتر از 300 کاراکتر باشد");
         }
     }
 }
