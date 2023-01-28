@@ -30,7 +30,7 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="user" class="fea icon-sm icons"></i>
                                             <input asp-for="PreRegisterationDTO.Name" class="form-control ps-5" placeholder="نام">
-                                            <span asp-validation-for="PreRegisterationDTO.Name" class="text-danger"></span>
+                                            <span asp-validation-for="PreRegisterationDTO.Name" class="text-danger font-size-14px"></span>
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -41,7 +41,7 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="user-check" class="fea icon-sm icons"></i>
                                             <input asp-for="PreRegisterationDTO.Family" class="form-control ps-5" placeholder="نام خانوادگی">
-                                            <span asp-validation-for="PreRegisterationDTO.Family" class="text-danger"></span>
+                                            <span asp-validation-for="PreRegisterationDTO.Family" class="text-danger font-size-14px"></span>
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -57,7 +57,7 @@
                                                 <option value="دوره دوم راهنمایی">دوره دوم راهنمایی</option>
                                                 <option value="دانشگاه و مقاطع بالاتر">دانشگاه و مقاطع بالاتر</option>
                                             </select>
-                                            <span asp-validation-for="PreRegisterationDTO.Grade" class="text-danger"></span>
+                                            <span asp-validation-for="PreRegisterationDTO.Grade" class="text-danger font-size-14px"></span>
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -68,7 +68,7 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="smartphone" class="fea icon-sm icons"></i>
                                             <input asp-for="PreRegisterationDTO.PhoneNumber" class="form-control ps-5" placeholder="شماره موبایل (*********09)">
-                                            <span asp-validation-for="PreRegisterationDTO.PhoneNumber" class="text-danger"></span>
+                                            <span asp-validation-for="PreRegisterationDTO.PhoneNumber" class="text-danger font-size-14px"></span>
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -88,6 +88,8 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="user-check" class="fea icon-sm icons"></i>
                                             <input type="number" min="1" asp-for="PreRegisterationDTO.HowManyTermDidYouPass" class="form-control ps-5" placeholder="چند ترم خواندید ؟">
+                                            <span asp-validation-for="PreRegisterationDTO.HowManyTermDidYouPass" class="text-danger font-size-14px"></span>
+
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -98,6 +100,8 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="book" class="fea icon-sm icons"></i>
                                             <input asp-for="PreRegisterationDTO.BookNameReadInEnglishClass" class="form-control ps-5" placeholder="چه کتابهایی خواندید؟">
+                                            <span asp-validation-for="PreRegisterationDTO.BookNameReadInEnglishClass" class="text-danger font-size-14px"></span>
+
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -109,7 +113,7 @@
                                         <div class="form-icon position-relative">
                                             <i data-feather="message-circle" class="fea icon-sm icons"></i>
                                             <textarea asp-for="PreRegisterationDTO.Description" class="form-control ps-5"></textarea>
-                                            <span asp-validation-for="PreRegisterationDTO.Description" class="text-danger"></span>
+                                            <span asp-validation-for="PreRegisterationDTO.Description" class="text-danger font-size-14px"></span>
                                         </div>
                                     </div>
                                 </div><!--end col-->

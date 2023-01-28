@@ -39,13 +39,13 @@ namespace AcademyManagement.Application.DTOs.Account
     {
         public PreRegisterationDTOValidator()
         {
-            RuleFor(p => p.Name).NotNull().Length(1, 150).WithMessage("لطفا نام خود را وارد کنید");
+            RuleFor(p => p.Name).Length(1, 150).NotNull().WithMessage("لطفا نام خود را وارد کنید");
 
-            RuleFor(p => p.Family).NotNull().Length(1, 150).WithMessage("لطفا نام خانوادگی خود را وارد کنید");
+            RuleFor(p => p.Family).Length(1, 150).NotNull().WithMessage("لطفا نام خانوادگی خود را وارد کنید");
 
-            RuleFor(p => p.PhoneNumber).NotNull().Length(1, 50).WithMessage("لطفا شماره موبایل خود را وارد کنید");
+            RuleFor(p => p.PhoneNumber).Length(1, 50).NotNull().WithMessage("لطفا شماره موبایل خود را وارد کنید");
 
-            RuleFor(p => p.Grade).NotNull().Length(1, 300).WithMessage("لطفا مقطع تحصیلی خود را وارد کنید");
+            RuleFor(p => p.Grade).Length(1, 300).NotNull().WithMessage("لطفا مقطع تحصیلی خود را وارد کنید");
 
             RuleFor(p => p.HowManyTermDidYouPass).InclusiveBetween(1,int.MaxValue).WithMessage("عدد وارد شده خارج از محدوده است");
 
