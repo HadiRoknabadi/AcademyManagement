@@ -17,6 +17,12 @@
   <ItemGroup>
     <ProjectReference Include="..\AcademyManagement.Application\AcademyManagement.Application.csproj" />
     <ProjectReference Include="..\AcademyManagement.Persistence\AcademyManagement.Persistence.csproj" />
+    <ProjectReference Include="..\AcademyManagement.Infrastructure\AcademyManagement.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  
   </ItemGroup>
 
   <ItemGroup>

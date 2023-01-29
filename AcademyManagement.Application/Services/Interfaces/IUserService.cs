@@ -1,4 +1,5 @@
 ﻿using AcademyManagement.Application.DTOs.Account;
+using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Domain.Entities.Account;
 
 namespace AcademyManagement.Application.Services.Interfaces
@@ -11,5 +12,7 @@ namespace AcademyManagement.Application.Services.Interfaces
         Task<bool> IsExistUserByPhoneNumber(string phoneNumber);
 
         Task<User> GetUserByPhoneNumber(string phoneNumber);
+
+        Task<FilterUsersDTO> FilterUsers(FilterUsersDTO filter);
     }
 }

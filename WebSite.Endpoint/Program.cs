@@ -27,6 +27,12 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
+
+
+#endregion
+
+#region  Add Identity
+
 builder.Services.AddIdentityService(builder.Configuration);
 
 builder.Services.AddAuthorization();

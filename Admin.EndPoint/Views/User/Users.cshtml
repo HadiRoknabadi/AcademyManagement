@@ -1,0 +1,160 @@
+@using AcademyManagement.Application.DTOs.User
+@model FilterUsersDTO
+
+@{
+    ViewData["Title"] = "کاربران";
+}
+
+
+<div class="container margin-bottom-10">
+    <a asp-area="Admin" asp-controller="User" asp-action="AddUser" class="btn btn-success">افزودن کاربر</a>
+</div>
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form id="filter-form" asp-area="Admin" asp-controller="User" asp-action="Users" method="get">
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label>نام کاربر</label>
+                <input asp-for="Name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>نام خانوادگی کاربر</label>
+                <input asp-for="Family" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>ایمیل کاربر</label>
+                <input asp-for="Email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>شماره موبایل کاربر</label>
+                <input asp-for="PhoneNumber" class="form-control">
+            </div>
+            <hr />
+            <h4>وضعیت</h4>
+            <div class="control-group">
+                @foreach (var item in Html.GetEnumSelectList<FilterUserState>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.State)"
+                            @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.State) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <hr />
+            <h4>نقش کاربر</h4>
+            <div class="control-group">
+                @foreach (var item in Html.GetEnumSelectList<FilterUserRole>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.UserRole)"
+                            @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.UserRole) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <hr />
+            <h4>مرتب سازی</h4>
+            <div class="control-group">
+                @foreach (var item in Html.GetEnumSelectList<FilterUserOrder>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.OrderBy)"
+                            @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.OrderBy) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <button type="submit" class="btn btn-success btn-block">فیلتر</button>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-md-8 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.Users != null && Model.Users.Any())
+        {
+            <div class="table-scrollable">
+
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>
+                                شناسه
+                            </th>
+                            <th>
+                                نام و نام خانوادگی
+                            </th>
+                            <th>
+                                ایمیل
+                            </th>
+                            <th>
+                                شماره موبایل
+                            </th>
+                            <th>
+                                وضعیت حساب
+                            </th>
+                            <th>
+                                دستورات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.Users)
+                        {
+                            <tr id="ajax-url-item-@user.Id">
+                                <td>
+                                    @user.Id
+                                </td>
+                                <td>
+                                    @user.FullName
+                                </td>
+                                <td>
+                                    @user.Email
+                                </td>
+                                <td>
+                                    @user.PhoneNumber
+                                </td>
+
+                                <td>
+                                    <span class="label label-@(user.PhoneNumberConfirmed?"success":"danger")">@(user.PhoneNumberConfirmed?"فعال":"غیرفعال")</span>
+                                </td>
+
+
+
+                                <td>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="EditUser" asp-route-userId="@user.Id"
+                                class="btn btn-warning btn-xs">ویرایش</a>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="DeleteUser"
+                                asp-route-userId="@user.Id" ajax-url-button="@user.Id"
+                                class="btn btn-danger btn-xs">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <Alert type="warning" message="هیچ اطلاعاتی یافت نشد"></Alert>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+    </div>
+</div>

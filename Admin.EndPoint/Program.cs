@@ -1,5 +1,11 @@
+using AcademyManagement.Application.Services.Implementations;
+using AcademyManagement.Application.Services.Interfaces;
+using AcademyManagement.Application.Services.Interfaces.Contexts;
+using AcademyManagement.Infrastructure.IdentityConfigs;
+using AcademyManagement.Infrastructure.MappingProfile;
 using AcademyManagement.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -22,14 +28,40 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 
 #endregion
 
+#region  Add Identity
+
+builder.Services.AddIdentityService(builder.Configuration);
+
+builder.Services.AddAuthorization();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.LoginPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
+});
+
+#endregion
+
 #region Html Encoder
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
 
 #endregion
 
+#region Config Services
+
+builder.Services.AddScoped<IDatabaseContext, DataBaseContext>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
+#endregion
+
+#region Auto Mapper
+
+builder.Services.AddAutoMapper(typeof(PreRegisterationMappingProfile));
+
+#endregion
 
 var app = builder.Build();
 
