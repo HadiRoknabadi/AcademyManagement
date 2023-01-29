@@ -1,0 +1,253 @@
+﻿/* custome styles */
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Black.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Black.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb_Black.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb_Black.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb_Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Bold.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb_Bold.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb_Bold.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Medium.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb_Medium.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb_Medium.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Light.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb_Light.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb_Light.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb_Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_UltraLight.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb_UltraLight.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-display: swap;
+    font-weight: normal;
+    src: url('../fonts/IRANSans/eot/IRANSansWeb.eot');
+    src: url('../fonts/IRANSans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url('../fonts/IRANSans/woff2/IRANSansWeb.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url('../fonts/IRANSans/woff/IRANSansWeb.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('../fonts/IRANSans/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+body,
+h1,
+h4,
+h5,
+span,
+input,
+b,
+ul {
+    font-family: IRANSans !important;
+
+}
+
+.ck-content {
+    height: 300px;
+}
+
+.max-width-100 {
+    max-width: 100px;
+}
+
+.max-height-100 {
+    height: 100px;
+}
+
+.max-width-100 {
+    max-width: 100px;
+}
+
+.max-height-100 {
+    max-height: 100px;
+}
+
+.back-link {
+    text-decoration: none !important;
+    float: left;
+    font-size: 14px;
+    color: #1ca2bd;
+    border-bottom: 1px dashed #1ca2bd;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.list-style-none li {
+    list-style: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-24 {
+    margin-top: 24px;
+}
+
+.margin-top-21 {
+    margin-top: 21px !important;
+}
+
+.margin-top-minus-21 {
+    margin-top: -21px !important;
+}
+
+.margin-right-20 {
+    margin-right: 20px !important;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.element-center {
+    margin: 0 auto;
+}
+
+.product-color-style {
+    margin: 0 auto;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px
+}
+
+.custome-accordion {
+    padding: 5px 8px;
+    margin-top: 5px;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
+.custome-accordion a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.custome-modal-footer {
+
+    padding-top: 8px;
+    padding-bottom: 12px;
+}
+
+.custome-modal-footer button {
+    margin: 0 6px 4px 0;
+}
+
+.sweet-box {
+    border-radius: 5px;
+    box-shadow: 0 0 7px 0 #eaeff4;
+    border: 1px solid #ecf0f4;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-us-detail-span-style {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.direction-ltr {
+    direction: ltr;
+}
+
+.dz-image img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+.code-box
+{
+    direction: ltr;
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.code-box p{
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+}
