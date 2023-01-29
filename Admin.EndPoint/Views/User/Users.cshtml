@@ -7,7 +7,7 @@
 
 
 <div class="container margin-bottom-10">
-    <a asp-area="Admin" asp-controller="User" asp-action="AddUser" class="btn btn-success">افزودن کاربر</a>
+    <a asp-controller="User" asp-action="AddUser" class="btn btn-success">افزودن کاربر</a>
 </div>
 
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
@@ -15,7 +15,7 @@
         <div class="header bordered-sky">
             فیلتر
         </div>
-        <form id="filter-form" asp-area="Admin" asp-controller="User" asp-action="Users" method="get">
+        <form id="filter-form" asp-controller="User" asp-action="Users" method="get">
             <input type="hidden" asp-for="PageId" />
             <div class="form-group">
                 <label>نام کاربر</label>

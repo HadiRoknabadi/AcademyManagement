@@ -29,6 +29,27 @@ namespace Admin.EndPoint.Controllers
 
         #endregion
 
+        #region  Add User
+
+        [Route("Admin/AddUser")]
+        public IActionResult AddUser()
+        {
+            return View();
+        }
+
+        [Route("Admin/AddUser")]
+        [HttpPost]
+        public IActionResult AddUser(AddUserDTO addUserDTO)
+        {
+            if(ModelState.IsValid)
+            {
+
+            }
+            return View(addUserDTO);
+        }
+
+        #endregion
+
         
     }
 }

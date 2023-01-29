@@ -4,6 +4,8 @@ using AcademyManagement.Application.Services.Interfaces.Contexts;
 using AcademyManagement.Infrastructure.IdentityConfigs;
 using AcademyManagement.Infrastructure.MappingProfile;
 using AcademyManagement.Persistence.Contexts;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
@@ -46,6 +48,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 #region Html Encoder
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
+
+#endregion
+
+#region Fluent Validation
+
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddTransient<IValidator<AddUserDTO>, AddUserDTOValidator>();
+
+
 
 #endregion
 
