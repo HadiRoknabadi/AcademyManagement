@@ -14,5 +14,9 @@ namespace AcademyManagement.Application.Services.Interfaces
         Task<User> GetUserByPhoneNumber(string phoneNumber);
 
         Task<FilterUsersDTO> FilterUsers(FilterUsersDTO filter);
+
+        Task<AddUserResult> AddUser(AddUserDTO addUserDTO);
+
+        Task<bool> IsExistUserByEmail(string email);
     }
 }

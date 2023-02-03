@@ -8,6 +8,7 @@ namespace AcademyManagement.Domain.Entities.Account
     {
         public string Name { get; set; }
         public string Family { get; set; }
+        public string Avatar { get; set; }
         public string FullName { get { return $"{Name} {Family}"; } }
     }
 }

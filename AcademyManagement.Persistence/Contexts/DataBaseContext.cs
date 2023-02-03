@@ -49,7 +49,6 @@ namespace AcademyManagement.Persistence.Contexts
 
             modelBuilder.ApplyConfiguration(new PreRegisterationConfiguration());
 
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             #endregion
         }

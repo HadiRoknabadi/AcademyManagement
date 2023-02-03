@@ -1,12 +1,8 @@
 ﻿using AcademyManagement.Domain.Entities.Account;
+using AcademyManagement.Persistence.Configs.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AcademyManagement.Persistence.Contexts
 {
@@ -20,6 +16,9 @@ namespace AcademyManagement.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            GetEntitiesConfigs(builder);
+
+
             builder.Entity<IdentityUser<string>>().ToTable("Users", "Identity");
             builder.Entity<IdentityRole<string>>().ToTable("Roles", "Identity");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Identity");
@@ -34,7 +33,14 @@ namespace AcademyManagement.Persistence.Contexts
 
             builder.Entity<IdentityUserToken<string>>().HasKey(p => new { p.LoginProvider, p.Name });
 
-          
+            
+        }
+
+        private static void GetEntitiesConfigs(ModelBuilder modelBuilder)
+        {
+         
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+
         }
 
     }

@@ -64,6 +64,7 @@ builder.Services.AddTransient<IValidator<AddUserDTO>, AddUserDTOValidator>();
 
 builder.Services.AddScoped<IDatabaseContext, DataBaseContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUploader, UploaderService>();
 
 
 #endregion
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 #region Auto Mapper
 
 builder.Services.AddAutoMapper(typeof(PreRegisterationMappingProfile));
+builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 
 #endregion
 

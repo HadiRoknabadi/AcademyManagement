@@ -37,7 +37,7 @@ namespace AcademyManagement.Infrastructure.IdentityConfigs
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireNonAlphanumeric = false;
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
             });

@@ -3,10 +3,12 @@ using AcademyManagement.Application.DTOs.Paging;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Domain.Entities.Account;
+using AcademyManagement.Infrastructure.Utils;
 using AutoMapper;
+using Khorshidkhanoom.Application.Generators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using System.Runtime.InteropServices;
 
 namespace AcademyManagement.Application.Services.Implementations
 {
@@ -17,13 +19,16 @@ namespace AcademyManagement.Application.Services.Implementations
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IUploader _uploader;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUploader uploader)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _uploader = uploader;
         }
+
 
 
 
@@ -34,12 +39,15 @@ namespace AcademyManagement.Application.Services.Implementations
 
         public async Task<bool> IsExistUserByPhoneNumber(string phoneNumber)
         {
-            var user= await _userManager.FindByNameAsync(phoneNumber);
-
-            if (user!=null) return true;
-
-            return false;
+            return await _userManager.Users.AsQueryable().AnyAsync(u=>u.PhoneNumber==phoneNumber);
         }
+
+        public async Task<bool> IsExistUserByEmail(string email)
+        {
+            return await _userManager.Users.AsQueryable().AnyAsync(u=>u.Email==email);
+
+        }
+
 
         public async Task<LoginResult> LoginUser(LoginDTO loginDTO)
         {
@@ -163,7 +171,47 @@ namespace AcademyManagement.Application.Services.Implementations
 
         #endregion
 
+        #region Add User
 
+        public async Task<AddUserResult> AddUser(AddUserDTO addUserDTO)
+        {
+            if(await IsExistUserByPhoneNumber(addUserDTO.PhoneNumber)) return AddUserResult.PhoneNumberIsExist;
+
+            if(string.IsNullOrEmpty(addUserDTO.Email)==false && await IsExistUserByEmail(addUserDTO.Email)) return AddUserResult.EmailIsExist;
+
+            var user=_mapper.Map<AddUserDTO,User>(addUserDTO);
+           
+
+            if(addUserDTO.AvatarFile!=null)
+            {
+                var imageName=Generator.GenerateUniqCode() + Path.GetExtension(addUserDTO.AvatarFile.FileName);
+
+                var res=await _uploader.UploadImage(addUserDTO.AvatarFile,imageName,43,43);
+
+                switch(res)
+                {
+                    case DTOs.Common.UploadResult.Success:
+                        user.Avatar = imageName;
+                        break;
+
+                    case DTOs.Common.UploadResult.CantUploadImage:
+                        return AddUserResult.CantUploadAvatar;
+                }
+
+            }
+            else
+            {
+                user.Avatar="Default.jpg";
+            }
+
+            var createUserResult=await _userManager.CreateAsync(user,addUserDTO.Password);
+          
+
+            return AddUserResult.Success;
+        }
+
+
+        #endregion
 
     }
 }
