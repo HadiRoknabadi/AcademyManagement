@@ -1,0 +1,8 @@
+@using AcademyManagement.Application.DTOs.Role
+@model AddOrEditRoleDTO
+
+<input type="hidden" asp-for="Id">
+
+<label>نام نقش</label>
+<input asp-for="Name" class="form-control" placeholder="لطفا نام نقش را وارد کنید">
+<span asp-validation-for="Name" class="text-danger"></span>

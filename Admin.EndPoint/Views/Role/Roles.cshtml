@@ -1,0 +1,139 @@
+@using Microsoft.AspNetCore.Identity
+@using AcademyManagement.Application.DTOs.Role
+@model List<IdentityRole>
+
+@{
+    ViewData["Title"] = "نقش ها";
+}
+
+
+<div class="container margin-bottom-10">
+    <a data-toggle="modal" data-target="#addRole" class="btn btn-success">افزودن نقش</a>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-scrollable">
+
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>
+                                شناسه
+                            </th>
+                            <th>
+                                نام نقش
+                            </th>
+                            <th>
+                                دستورات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @role.Id
+                                </td>
+                                <td>
+                                    @role.Name
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#editRole-@role.Id"
+                                        class="btn btn-warning btn-xs">ویرایش</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <Alert type="warning" message="هیچ اطلاعاتی یافت نشد"></Alert>
+        }
+    </div>
+</div>
+
+<!-- start Add Role Modal -->
+
+<div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">افزودن نقش</h5>
+                <button type="button" class="close margin-top-minus-21" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+
+                    <form asp-controller="Role" asp-action="AddRole" method="post" asp-antiforgery="true"
+                        data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
+                        <partial name="_AddRole" model="@(new AddOrEditRoleDTO{})" />
+                        <div class="custome-modal-footer">
+                            <button type="submit" class="btn btn-success pull-right">ثبت</button>
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">بستن</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end Add Role Modal -->
+
+@if(Model!=null && Model.Any())
+{
+    @foreach (var role in Model)
+    {
+        <div class="modal fade" id="editRole-@role.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش نقش</h5>
+                <button type="button" class="close margin-top-minus-21" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+
+                    <form asp-controller="Role" asp-action="EditRole" method="post" asp-antiforgery="true"
+                        data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
+                        <partial name="_EditRole" model="@(new AddOrEditRoleDTO{Id=role.Id,Name=role.Name})" />
+                        <div class="custome-modal-footer">
+                            <button type="submit" class="btn btn-success pull-right">ثبت</button>
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">بستن</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+    }
+}
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

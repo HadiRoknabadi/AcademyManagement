@@ -3,12 +3,10 @@ using AcademyManagement.Application.DTOs.Paging;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Domain.Entities.Account;
-using AcademyManagement.Infrastructure.Utils;
 using AutoMapper;
 using Khorshidkhanoom.Application.Generators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace AcademyManagement.Application.Services.Implementations
 {
@@ -203,6 +201,10 @@ namespace AcademyManagement.Application.Services.Implementations
             {
                 user.Avatar="Default.jpg";
             }
+
+            //Add Role To User
+
+            await _userManager.AddToRoleAsync(user,addUserDTO.Role);
 
             var createUserResult=await _userManager.CreateAsync(user,addUserDTO.Password);
           

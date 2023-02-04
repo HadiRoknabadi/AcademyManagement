@@ -1,3 +1,4 @@
+using AcademyManagement.Application.DTOs.Role;
 using AcademyManagement.Application.Services.Implementations;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Application.Services.Interfaces.Contexts;
@@ -55,6 +56,7 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddTransient<IValidator<AddUserDTO>, AddUserDTOValidator>();
+builder.Services.AddTransient<IValidator<AddOrEditRoleDTO>, AddOrEditRoleDTOValidator>();
 
 
 
@@ -64,6 +66,7 @@ builder.Services.AddTransient<IValidator<AddUserDTO>, AddUserDTOValidator>();
 
 builder.Services.AddScoped<IDatabaseContext, DataBaseContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUploader, UploaderService>();
 
 
@@ -73,6 +76,7 @@ builder.Services.AddScoped<IUploader, UploaderService>();
 
 builder.Services.AddAutoMapper(typeof(PreRegisterationMappingProfile));
 builder.Services.AddAutoMapper(typeof(UserMappingProfile));
+builder.Services.AddAutoMapper(typeof(RoleMappingProfile));
 
 #endregion
 

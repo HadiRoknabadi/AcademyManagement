@@ -1,7 +1,9 @@
 @model AddUserDTO
-
+@using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "افزودن کاربر";
+
+     var roles=ViewData["Roles"] as List<IdentityRole>;
 }
 
 <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -42,16 +44,16 @@
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                         </div>
-                        @* <div class="col-sm-4">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>نقش کاربر</label>
-                                <select asp-for="RoleId" asp-items="@(new SelectList(roles,"Id","RoleTitle"))"
+                                <select asp-for="Role" asp-items="@(new SelectList(roles,"Name","Name"))"
                                     class="form-control">
                                     <option value="0">لطفا یک گزینه را انتخاب کنید</option>
                                 </select>
-                                <span asp-validation-for="RoleId" class="text-danger"></span>
+                                <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
-                        </div> *@
+                        </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label>رمز عبور</label>

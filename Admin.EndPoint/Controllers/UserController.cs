@@ -9,11 +9,17 @@ namespace Admin.EndPoint.Controllers
         #region  Constructor
 
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
+
+
+
+
 
         #endregion
 
@@ -32,8 +38,15 @@ namespace Admin.EndPoint.Controllers
         #region  Add User
 
         [Route("Admin/AddUser")]
-        public IActionResult AddUser()
+        public async Task<IActionResult> AddUser()
         {
+
+            #region Fill Role List
+
+            ViewData["Roles"] = await _roleService.GetAllRoles();
+
+            #endregion
+
             return View();
         }
 
@@ -64,6 +77,14 @@ namespace Admin.EndPoint.Controllers
                         return RedirectToAction(nameof(Users));
                 }
             }
+
+            #region Fill Role List
+
+            ViewData["Roles"] = await _roleService.GetAllRoles();
+
+            #endregion
+
+
             return View(addUserDTO);
         }
 
