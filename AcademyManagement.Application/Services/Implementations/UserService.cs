@@ -18,14 +18,18 @@ namespace AcademyManagement.Application.Services.Implementations
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IUploader _uploader;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUploader uploader)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUploader uploader, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _uploader = uploader;
+            _roleManager = roleManager;
         }
+
+
 
 
 
@@ -118,25 +122,7 @@ namespace AcademyManagement.Application.Services.Implementations
             // }
 
             #endregion
-
-            #region User Role
-
-            // switch (filter.UserRole)
-            // {
-            //     case FilterUserRole.All:
-            //         break;
-
-            //     case FilterUserRole.Admin:
-            //         query = query.Where(u => u.RoleId == 1);
-            //         break;
-
-            //     case FilterUserRole.NormalUser:
-            //         query = query.Where(u => u.RoleId == 2);
-            //         break;
-            // }
-
-            #endregion
-
+            
             #region Filter
 
             if (!string.IsNullOrEmpty(filter.Name))
