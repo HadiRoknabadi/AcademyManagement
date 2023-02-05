@@ -201,5 +201,80 @@ namespace AcademyManagement.Application.Services.Implementations
 
         #endregion
 
+
+        #region  Get User Details For Edit
+
+        public async Task<EditUserDTO> GetUserDetailsForEdit(string userId)
+        {
+            var user=await _userManager.FindByIdAsync(userId);
+
+            var userDetails=_mapper.Map<User,EditUserDTO>(user);
+
+            var userRole=await _userManager.GetRolesAsync(user);
+
+            userDetails.Role=userRole.FirstOrDefault();
+
+            return userDetails;
+        }
+
+
+        #endregion
+
+        #region Edit User
+
+        public async Task<EditUserResult> EditUser(EditUserDTO editUserDTO)
+        {
+            var user=await _userManager.FindByIdAsync(editUserDTO.Id);
+
+            if(user==null) return EditUserResult.NotFoundUser;
+
+            if(editUserDTO.PhoneNumber!=user.PhoneNumber && await IsExistUserByPhoneNumber(editUserDTO.PhoneNumber)) return EditUserResult.PhoneNumberIsExist;
+
+            if(string.IsNullOrEmpty(editUserDTO.Email)==false && editUserDTO.Email!=user.Email && await IsExistUserByEmail(editUserDTO.Email)) return EditUserResult.EmailIsExist;
+
+            var editedUser=_mapper.Map<EditUserDTO,User>(editUserDTO,user);
+
+            if(editUserDTO.AvatarFile!=null)
+            {
+                var imageName=Generator.GenerateUniqCode() + Path.GetExtension(editUserDTO.AvatarFile.FileName);
+
+                var res=await _uploader.UploadImage(editUserDTO.AvatarFile,imageName,43,43,user.Avatar);
+
+                switch(res)
+                {
+                    case DTOs.Common.UploadResult.Success:
+                        editedUser.Avatar = imageName;
+                        break;
+
+                    case DTOs.Common.UploadResult.CantUploadImage:
+                        return EditUserResult.CantUploadAvatar;
+                }
+
+            }
+
+
+
+             //Update User Roles
+
+            var isInReceivedRole=await _userManager.IsInRoleAsync(user,editUserDTO.Role);
+
+            if(isInReceivedRole==false)
+            {
+                var userRole=await _userManager.GetRolesAsync(user);
+                await _userManager.RemoveFromRoleAsync(editedUser,userRole.FirstOrDefault());
+
+                await _userManager.AddToRoleAsync(editedUser,editUserDTO.Role);
+            }
+
+            var updateUserResult=await _userManager.UpdateAsync(editedUser);
+          
+
+            return EditUserResult.Success;
+
+        }
+
+
+        #endregion
+
     }
 }

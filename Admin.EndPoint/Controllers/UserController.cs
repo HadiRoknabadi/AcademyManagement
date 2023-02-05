@@ -91,5 +91,74 @@ namespace Admin.EndPoint.Controllers
         #endregion
 
 
+        #region  Edit User
+
+        [Route("Admin/EditUser/{userId}")]
+        public async Task<IActionResult> EditUser(string userId)
+        {
+            var userDetails=await _userService.GetUserDetailsForEdit(userId);
+
+            if(userDetails==null)
+            {
+                TempData[SweetAlert_ErrorMessage]="کاربری با این مشخصصات یافت نشد";
+                return RedirectToAction(nameof(Users));
+            }
+
+            #region Fill Role List
+
+            ViewData["Roles"] = await _roleService.GetAllRoles();
+
+            #endregion
+
+            return View(userDetails);
+        }
+
+        [Route("Admin/EditUser/{userId?}")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(EditUserDTO editUserDTO)
+        {
+            if(ModelState.IsValid)
+            {
+                var res=await _userService.EditUser(editUserDTO);
+
+                switch(res)
+                {
+                    case EditUserResult.Success:
+                        TempData[SweetAlert_SuccessMessage] = "ویرایش کاربر با موفقیت انجام شد";
+                        return RedirectToAction(nameof(Users));
+
+                    case EditUserResult.NotFoundUser:
+                        TempData[Toast_WarningMessage] = "کاربری با این مشخصات یافت نشد";
+                        break;
+
+                    case EditUserResult.PhoneNumberIsExist:
+                        TempData[Toast_WarningMessage] = "شماره موبایل وارد شده قبلا در سایت ثبت شده است";
+                        break;
+
+                    case EditUserResult.EmailIsExist:
+                        TempData[Toast_WarningMessage] = "ایمیل وارد شده قبلا در سایت ثبت شده است";
+                        break;
+
+                    case EditUserResult.CantUploadAvatar:
+                        TempData[Toast_ErrorMessage] = "تصویر انتخاب شده قابل بارگذاری نمی باشد";
+                        break;
+                }
+
+                
+            }
+
+            #region Fill Role List
+
+            ViewData["Roles"] = await _roleService.GetAllRoles();
+
+            #endregion
+
+            return View(editUserDTO);
+        }
+
+        #endregion
+
+
     }
 }

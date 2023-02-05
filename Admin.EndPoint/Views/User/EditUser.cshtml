@@ -1,0 +1,131 @@
+@model EditUserDTO
+@using Microsoft.AspNetCore.Identity
+@using AcademyManagement.Application.Utils
+@{
+    ViewData["Title"] = "ویرایش کاربر";
+
+    var roles = ViewData["Roles"] as List<IdentityRole>;
+}
+
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-blue">
+            <span class="widget-caption">@ViewData["Title"]</span>
+        </div>
+        <div class="widget-body">
+            <div>
+                <form id="addUserFrm" asp-controller="User" asp-action="EditUser" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id"/>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>نام</label>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>نام خانوادگی</label>
+                                <input asp-for="Family" class="form-control">
+                                <span asp-validation-for="Family" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>ایمیل</label>
+                                <input asp-for="Email" class="form-control">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>شماره موبایل</label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="*********09">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>نقش کاربر</label>
+                                <select asp-for="Role" asp-items="@(new SelectList(roles,"Name","Name"))"
+                                    class="form-control">
+                                    <option value="0">لطفا یک گزینه را انتخاب کنید</option>
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>رمز عبور</label>
+                                <input asp-for="Password" type="password" class="form-control">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>ایمیل فعال / غیرفعال :</label>
+                                <label>
+                                    <input asp-for="IsEmailActive" class="checkbox-slider slider-icon colored-success"
+                                        type="checkbox">
+                                    <span class="text"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>شماره موبایل فعال / غیرفعال :</label>
+                                <label>
+                                    <input asp-for="IsPhoneNumberActive"
+                                        class="checkbox-slider slider-icon colored-success" type="checkbox">
+                                    <span class="text"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="wide" />
+                    <div class="margin-bottom-20">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>آپلود تصویرآواتار</h5>
+                                <span class="file-input btn btn-block btn-default btn-file">
+                                    انتخاب تصویر
+                                    <input asp-for="AvatarFile" type="file" accept=".png,.jpeg,.jpg">
+                                </span>
+                            </div>
+                            <div class="col-lg-6">
+                                <h5>پیش نمایش تصویر انتخاب شده</h5>
+                                @if (Model.Avatar != "Default.jpg")
+                                {
+                                    <img class="thumbnail max-width-100 max-height-100"
+                                        src="@(PathExtension.UserAvatarThumb+Model.Avatar)" id="ImagePreview">
+
+                                }
+                                else
+                                {
+                                    <img class="thumbnail max-width-100 max-height-100"
+                                        src="@(PathExtension.DefaultUserAvatar)" id="ImagePreview">
+
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" id="addUserBtn" class="btn btn-success">ثبت اطلاعات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        ImagePreview("AvatarFile");
+    </script>
+}

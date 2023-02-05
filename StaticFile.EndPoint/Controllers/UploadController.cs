@@ -1,6 +1,6 @@
 ﻿using AcademyManagement.Application.DTOs.Common;
+using AcademyManagement.Application.Utils;
 using AcademyManagement.Infrastructure.Uploader;
-using AcademyManagement.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 

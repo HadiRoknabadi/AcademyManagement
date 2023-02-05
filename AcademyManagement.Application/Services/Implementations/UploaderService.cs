@@ -1,6 +1,6 @@
 ﻿using AcademyManagement.Application.DTOs.Common;
 using AcademyManagement.Application.Services.Interfaces;
-using AcademyManagement.Infrastructure.Utils;
+using AcademyManagement.Application.Utils;
 using Microsoft.AspNetCore.Http;
 using RestSharp;
 
@@ -10,7 +10,7 @@ namespace AcademyManagement.Application.Services.Implementations
     {
         public async Task<UploadResult> UploadImage(IFormFile image, string fileName, int? width, int? height, string? deletefileName)
         {
-            var client = new RestClient(PathExtension.StaticFileUploaderURL);
+            var client = new RestClient(PathExtension.StaticFileEndPointURL);
             client.Timeout = -1;
             var request = new RestRequest($"/api/upload?fileName={fileName}&width={width}&height={height}&deleteFileName={deletefileName}",Method.POST);
 
