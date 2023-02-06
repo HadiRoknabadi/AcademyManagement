@@ -1,5 +1,6 @@
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
+using AcademyManagement.Infrastructure.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.EndPoint.Controllers
@@ -96,11 +97,11 @@ namespace Admin.EndPoint.Controllers
         [Route("Admin/EditUser/{userId}")]
         public async Task<IActionResult> EditUser(string userId)
         {
-            var userDetails=await _userService.GetUserDetailsForEdit(userId);
+            var userDetails = await _userService.GetUserDetailsForEdit(userId);
 
-            if(userDetails==null)
+            if (userDetails == null)
             {
-                TempData[SweetAlert_ErrorMessage]="کاربری با این مشخصصات یافت نشد";
+                TempData[SweetAlert_ErrorMessage] = "کاربری با این مشخصصات یافت نشد";
                 return RedirectToAction(nameof(Users));
             }
 
@@ -118,11 +119,11 @@ namespace Admin.EndPoint.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserDTO editUserDTO)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var res=await _userService.EditUser(editUserDTO);
+                var res = await _userService.EditUser(editUserDTO);
 
-                switch(res)
+                switch (res)
                 {
                     case EditUserResult.Success:
                         TempData[SweetAlert_SuccessMessage] = "ویرایش کاربر با موفقیت انجام شد";
@@ -145,7 +146,7 @@ namespace Admin.EndPoint.Controllers
                         break;
                 }
 
-                
+
             }
 
             #region Fill Role List
@@ -155,6 +156,34 @@ namespace Admin.EndPoint.Controllers
             #endregion
 
             return View(editUserDTO);
+        }
+
+        #endregion
+
+
+        #region  Delete User
+
+        [Route("Admin/DeleteUser/{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = await _userService.DeleteUser(userId);
+
+                switch (res)
+                {
+                    case DeleteUserResult.NotFound:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Warning, "کاربری با این مشخصات یافت نشد", null);
+
+
+                    case DeleteUserResult.Success:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "کاربر با موفقیت حذف شد", null);
+
+
+                }
+            }
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "عملیات مورد نظر با خطا مواجه شد", null);
+
         }
 
         #endregion

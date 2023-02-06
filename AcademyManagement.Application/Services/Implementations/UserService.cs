@@ -2,6 +2,7 @@
 using AcademyManagement.Application.DTOs.Paging;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
+using AcademyManagement.Application.Services.Interfaces.Contexts;
 using AcademyManagement.Domain.Entities.Account;
 using AutoMapper;
 using Khorshidkhanoom.Application.Generators;
@@ -28,10 +29,6 @@ namespace AcademyManagement.Application.Services.Implementations
             _uploader = uploader;
             _roleManager = roleManager;
         }
-
-
-
-
 
 
 
@@ -164,6 +161,9 @@ namespace AcademyManagement.Application.Services.Implementations
             if(string.IsNullOrEmpty(addUserDTO.Email)==false && await IsExistUserByEmail(addUserDTO.Email)) return AddUserResult.EmailIsExist;
 
             var user=_mapper.Map<AddUserDTO,User>(addUserDTO);
+
+            user.InsertTime = DateTime.Now;
+            user.UpdateTime = DateTime.Now;
            
 
             if(addUserDTO.AvatarFile!=null)
@@ -193,6 +193,8 @@ namespace AcademyManagement.Application.Services.Implementations
             await _userManager.AddToRoleAsync(user,addUserDTO.Role);
 
             var createUserResult=await _userManager.CreateAsync(user,addUserDTO.Password);
+
+
           
 
             return AddUserResult.Success;
@@ -234,7 +236,9 @@ namespace AcademyManagement.Application.Services.Implementations
 
             var editedUser=_mapper.Map<EditUserDTO,User>(editUserDTO,user);
 
-            if(editUserDTO.AvatarFile!=null)
+            editedUser.UpdateTime = DateTime.Now;
+
+            if (editUserDTO.AvatarFile!=null)
             {
                 var imageName=Generator.GenerateUniqCode() + Path.GetExtension(editUserDTO.AvatarFile.FileName);
 
@@ -271,6 +275,26 @@ namespace AcademyManagement.Application.Services.Implementations
 
             return EditUserResult.Success;
 
+        }
+
+
+        #endregion
+
+        #region  Delete User 
+
+        public async Task<DeleteUserResult> DeleteUser(string userId)
+        {
+            var user=await _userManager.FindByIdAsync(userId);
+
+            if(user==null) return DeleteUserResult.NotFound;
+
+            user.IsRemoved = true;
+            user.RemovedTime= DateTime.Now;
+            user.UpdateTime = DateTime.Now;
+
+            await _userManager.UpdateAsync(user);
+
+            return DeleteUserResult.Success;;
         }
 
 

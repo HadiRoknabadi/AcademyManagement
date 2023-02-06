@@ -14,6 +14,8 @@ namespace AcademyManagement.Persistence.Configs.User
             builder.Ignore(u => u.FullName);
 
             builder.Property(u=>u.Avatar).IsRequired().HasMaxLength(200);
+
+            
         }
     }
 }

@@ -2,7 +2,6 @@
 using AcademyManagement.Domain.Attributes;
 using AcademyManagement.Domain.Entities.Account;
 using AcademyManagement.Persistence.Configs.PreRegisteration;
-using AcademyManagement.Persistence.Configs.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Persistence.Contexts

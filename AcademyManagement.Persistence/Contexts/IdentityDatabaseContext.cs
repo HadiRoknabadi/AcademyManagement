@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Persistence.Contexts
 {
-    public class IdentityDatabaseContext:IdentityDbContext<User>
+    public class IdentityDatabaseContext:IdentityDbContext<User,IdentityRole,string>
     {
         public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options):base(options)
         {
@@ -32,7 +32,8 @@ namespace AcademyManagement.Persistence.Contexts
             builder.Entity<IdentityUserRole<string>>().HasKey(p => new { p.UserId, p.RoleId });
 
             builder.Entity<IdentityUserToken<string>>().HasKey(p => new { p.LoginProvider, p.Name });
-
+            
+            builder.Entity<IdentityUser<string>>().HasQueryFilter(u=>EF.Property<bool>(u,"IsRemoved")==false);
             
         }
 

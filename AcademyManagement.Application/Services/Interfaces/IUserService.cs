@@ -18,6 +18,7 @@ namespace AcademyManagement.Application.Services.Interfaces
         Task<AddUserResult> AddUser(AddUserDTO addUserDTO);
         Task<EditUserResult> EditUser(EditUserDTO editUserDTO);
         Task<EditUserDTO> GetUserDetailsForEdit(string userId);
+        Task<DeleteUserResult> DeleteUser(string userId);
 
         Task<bool> IsExistUserByEmail(string email);
     }

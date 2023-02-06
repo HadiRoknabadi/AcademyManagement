@@ -78,7 +78,7 @@ namespace AcademyManagement.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PreRegisterations");
+                    b.ToTable("PreRegisterations", (string)null);
                 });
 #pragma warning restore 612, 618
         }
