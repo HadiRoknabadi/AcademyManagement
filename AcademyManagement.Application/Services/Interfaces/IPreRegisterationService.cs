@@ -1,10 +1,6 @@
 ﻿using AcademyManagement.Application.DTOs.Account;
+using AcademyManagement.Application.DTOs.PreRegisteration;
 using AcademyManagement.Domain.Entities.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AcademyManagement.Application.Services.Interfaces
 {
@@ -21,5 +17,7 @@ namespace AcademyManagement.Application.Services.Interfaces
         #endregion
 
         Task<bool> IsExistPreRegisterationByPhoneNumber(string phoneNumber);
+
+        Task<FilterPreRegisterationDTO> FilterPreRegisteration(FilterPreRegisterationDTO filter);
     }
 }

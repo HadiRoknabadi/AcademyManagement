@@ -1,0 +1,120 @@
+@using AcademyManagement.Application.DTOs.PreRegisteration
+@model FilterPreRegisterationDTO
+
+@{
+    ViewData["Title"] = "پیش ثبت نامی ها";
+}
+
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form id="filter-form" asp-controller="PreRegisteration" asp-action="PreRegisterations" method="get">
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label>نام</label>
+                <input asp-for="Name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>نام خانوادگی</label>
+                <input asp-for="Family" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>شماره موبایل</label>
+                <input asp-for="PhoneNumber" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>مقطع تحصیلی</label>
+                <select asp-for="Grade" class="form-control">
+                    <option value="">لطفا یک گزینه را انتخاب کنید</option>
+                    <option value="ابتدایی">ابتدایی</option>
+                    <option value="دوره اول راهنمایی">دوره اول راهنمایی</option>
+                    <option value="دوره دوم راهنمایی">دوره دوم راهنمایی</option>
+                    <option value="دانشگاه و مقاطع بالاتر">دانشگاه و مقاطع بالاتر</option>
+                </select>
+            </div>
+            <hr />
+            <h4>مرتب سازی</h4>
+            <div class="control-group">
+                @foreach (var item in Html.GetEnumSelectList<FilterPreRegisterationOrder>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.OrderBy)"
+                            @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.OrderBy) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <button type="submit" class="btn btn-success btn-block">فیلتر</button>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-md-8 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.PreRegisterations != null && Model.PreRegisterations.Any())
+        {
+            <div class="table-scrollable">
+
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>
+                                شناسه
+                            </th>
+                            <th>
+                                نام
+                            </th>
+                            <th>
+                                نام خانوادگی
+                            </th>
+                            <th>
+                                دستورات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var preRegisteration in Model.PreRegisterations)
+                        {
+                            <tr id="ajax-url-item-@preRegisteration.Id">
+                                <td>
+                                    @preRegisteration.Id
+                                </td>
+                                <td>
+                                    @preRegisteration.Name
+                                </td>
+                                <td>
+                                    @preRegisteration.Family
+                                </td>
+                                <td>
+                                    <a asp-controller="PreRegisteration" asp-action="PreRegisterationDetails"
+                                asp-route-preRegisterationId="@preRegisteration.Id"
+                                        class="btn btn-primary btn-xs">مشاهده جزئیات</a>
+                                    <a asp-controller="User" asp-action="DeleteUser" asp-route-userId="@preRegisteration.Id"
+                                        ajax-url-button="@preRegisteration.Id" class="btn btn-danger btn-xs">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        }
+        else
+        {
+            <Alert type="warning" message="هیچ اطلاعاتی یافت نشد"></Alert>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+    </div>
+</div>
