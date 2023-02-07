@@ -18,15 +18,35 @@ namespace Admin.EndPoint.Controllers
         #endregion
 
         #region  PreRegisterations
-        #endregion
 
         [Route("Admin/PreRegisterations")]
         public async Task<IActionResult> PreRegisterations(FilterPreRegisterationDTO filter)
         {
-            filter.HowManyShowPageAfterAndBefore=7;
-            var preRegisterations=await _preRegisterationService.FilterPreRegisteration(filter);
+            filter.HowManyShowPageAfterAndBefore = 7;
+            var preRegisterations = await _preRegisterationService.FilterPreRegisteration(filter);
 
             return View(preRegisterations);
         }
+
+        #endregion
+
+        #region PreRegisteratin Details
+
+        [Route("Admin/PreRegisteratinDetails/{preRegisterationId}")]
+        public async Task<IActionResult> PreRegisteratinDetails(int preRegisterationId)
+        {
+            var preRegisteration=await _preRegisterationService.GetPreRegisteratinDetails(preRegisterationId);
+            if(preRegisteration==null)
+            {
+                TempData[Toast_ErrorMessage]="اطلاعاتی یافت نشد";
+                return RedirectToAction(nameof(PreRegisterations));
+            }
+            return View(preRegisteration);
+
+        }
+
+        #endregion
     }
+
+
 }

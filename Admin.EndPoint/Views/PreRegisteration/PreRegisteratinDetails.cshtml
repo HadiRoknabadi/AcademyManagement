@@ -1,0 +1,53 @@
+@using AcademyManagement.Application.DTOs.PreRegisteration;
+
+@model PreRegisteratinDetailsDTO
+
+@{
+    ViewData["Title"] = "جزئیات پیش ثبت نامی";
+}
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+
+        <div class="contact-us-detail">
+            <div class="row">
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style"> نام : @Model.Name</span>
+                </div>
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style"> نام خانوادگی : @Model.Family</span>
+                </div>
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style"> مقطع تحصیلی : @Model.Grade</span>
+                </div>
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style"> شماره موبایل : @Model.PhoneNumber</span>
+                </div>
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style">   به کلاس زبان رفته ؟ : @(Model.WentToEnglishClassBefore==true ? "بله" : "خیر")</span>
+                </div>
+                @if(Model.WentToEnglishClassBefore)
+                {
+                 <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style">   تعداد ترم هایی که خوانده : @Model.HowManyTermPassed</span>
+                </div>
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style">    کتاب هایی که خوانده : @Model.BookNameReadInEnglishClass</span>
+                </div>
+                }
+              
+                <div class="col-lg-3 margin-top-21">
+                    <span class="contact-us-detail-span-style"> توضیحات : @Model.Description</span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

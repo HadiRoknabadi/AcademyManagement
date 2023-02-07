@@ -19,5 +19,7 @@ namespace AcademyManagement.Application.Services.Interfaces
         Task<bool> IsExistPreRegisterationByPhoneNumber(string phoneNumber);
 
         Task<FilterPreRegisterationDTO> FilterPreRegisteration(FilterPreRegisterationDTO filter);
+
+        Task<PreRegisteratinDetailsDTO> GetPreRegisteratinDetails(int preRegisterationId);
     }
 }

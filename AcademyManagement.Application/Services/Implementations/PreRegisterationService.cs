@@ -136,5 +136,20 @@ namespace AcademyManagement.Application.Services.Implementations
 
         #endregion
 
+        #region  PreRegisteration Details
+
+        public async Task<PreRegisteratinDetailsDTO> GetPreRegisteratinDetails(int preRegisterationId)
+        {
+            var preRegisteration=await GetPreRegisterationById(preRegisterationId);
+
+            if(preRegisteration==null) return null;
+
+            return _mapper.Map<PreRegisteration,PreRegisteratinDetailsDTO>(preRegisteration);
+        }
+
+
+
+        #endregion
+
     }
 }
