@@ -30,7 +30,7 @@ namespace AcademyManagement.Persistence.Contexts
             {
                 if(entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute),true).Length > 0)
                 {
-                    builder.Entity(entityType.Name).Property<DateTime?>("InsertTime");
+                    builder.Entity(entityType.Name).Property<DateTime>("InsertTime");
                     builder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
                     builder.Entity(entityType.Name).Property<DateTime?>("RemovedTime");
                     builder.Entity(entityType.Name).Property<bool>("IsRemoved");
@@ -51,10 +51,9 @@ namespace AcademyManagement.Persistence.Contexts
 
             #endregion
         }
-
-        public override int SaveChanges()
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var modifiedEntries = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted);
+             var modifiedEntries = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted);
 
             foreach (var entity in modifiedEntries)
             {
@@ -62,8 +61,9 @@ namespace AcademyManagement.Persistence.Contexts
 
                 var inserted = entityType.FindProperty("InsertTime");
                 var updateTime = entityType.FindProperty("UpdateTime");
-                var RemoveTime = entityType.FindProperty("RemoveTime");
                 var IsRemoved = entityType.FindProperty("IsRemoved");
+                var RemovedTime = entityType.FindProperty("RemovedTime");
+
 
                 if(entity.State==EntityState.Added && inserted!=null)
                 {
@@ -75,16 +75,16 @@ namespace AcademyManagement.Persistence.Contexts
                     entity.Property("UpdateTime").CurrentValue = DateTime.Now;
                 }
 
-                if (entity.State == EntityState.Deleted && RemoveTime != null && IsRemoved!=null)
+                if (entity.State == EntityState.Deleted && RemovedTime != null && IsRemoved!=null)
                 {
-                    entity.Property("RemoveTime").CurrentValue = DateTime.Now;
+                    entity.Property("RemovedTime").CurrentValue = DateTime.Now;
                     entity.Property("IsRemoved").CurrentValue = true;
+                    entity.State = EntityState.Modified;
                 }
             }
-
-
-            return base.SaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
         }
+
 
     }
 }

@@ -56,6 +56,7 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 builder.Services.AddScoped<IDatabaseContext,DataBaseContext>();
 builder.Services.AddScoped<IPreRegisterationService, PreRegisterationService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUploader, UploaderService>();
 builder.Services.AddScoped<ISenderService, SenderService>();
 builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 

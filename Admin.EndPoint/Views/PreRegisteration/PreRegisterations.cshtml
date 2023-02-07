@@ -97,7 +97,7 @@
                                     <a asp-controller="PreRegisteration" asp-action="PreRegisteratinDetails"
                                 asp-route-preRegisterationId="@preRegisteration.Id"
                                         class="btn btn-primary btn-xs">مشاهده جزئیات</a>
-                                    <a asp-controller="User" asp-action="DeleteUser" asp-route-userId="@preRegisteration.Id"
+                                    <a asp-controller="PreRegisteration" asp-action="DeletePreRegisteraton" asp-route-preRegisterationId="@preRegisteration.Id"
                                         ajax-url-button="@preRegisteration.Id" class="btn btn-danger btn-xs">حذف</a>
                                 </td>
                             </tr>

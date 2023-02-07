@@ -1,6 +1,8 @@
 using AcademyManagement.Application.DTOs.PreRegisteration;
 using AcademyManagement.Application.Services.Interfaces;
+using AcademyManagement.Infrastructure.Http;
 using Microsoft.AspNetCore.Mvc;
+using AcademyManagement.Application.DTOs.Account;
 
 namespace Admin.EndPoint.Controllers
 {
@@ -35,10 +37,10 @@ namespace Admin.EndPoint.Controllers
         [Route("Admin/PreRegisteratinDetails/{preRegisterationId}")]
         public async Task<IActionResult> PreRegisteratinDetails(int preRegisterationId)
         {
-            var preRegisteration=await _preRegisterationService.GetPreRegisteratinDetails(preRegisterationId);
-            if(preRegisteration==null)
+            var preRegisteration = await _preRegisterationService.GetPreRegisteratinDetails(preRegisterationId);
+            if (preRegisteration == null)
             {
-                TempData[Toast_ErrorMessage]="اطلاعاتی یافت نشد";
+                TempData[Toast_ErrorMessage] = "اطلاعاتی یافت نشد";
                 return RedirectToAction(nameof(PreRegisterations));
             }
             return View(preRegisteration);
@@ -46,6 +48,34 @@ namespace Admin.EndPoint.Controllers
         }
 
         #endregion
+
+        #region  Delete PreRegisteration
+
+        [Route("Admin/DeletePreRegisteratin/{preRegisterationId}")]
+        public async Task<IActionResult> DeletePreRegisteraton(int preRegisterationId)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = await _preRegisterationService.DeletePreRegisteration(preRegisterationId);
+
+                switch (res)
+                {
+                    case DeletePreRegisterationResult.NotFound:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Warning, "پیش ثبت نامی با این مشخصات یافت نشد", null);
+
+
+                    case DeletePreRegisterationResult.Success:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "پیش ثبت نامی با موفقیت حذف شد", null);
+
+
+                }
+            }
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "عملیات مورد نظر با خطا مواجه شد", null);
+        }
+
+
+        #endregion
+
     }
 
 

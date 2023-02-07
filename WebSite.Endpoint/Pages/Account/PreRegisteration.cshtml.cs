@@ -2,7 +2,6 @@ using AcademyManagement.Application.DTOs.Account;
 using AcademyManagement.Application.Services.Interfaces;
 using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebSite.Endpoint.Pages.Common;
 
 namespace WebSite.Endpoint.Pages.Account
@@ -55,11 +54,11 @@ namespace WebSite.Endpoint.Pages.Account
                 {
                     case AddPreRegisterationResult.Success:
                         TempData[SweetAlert_SuccessMessage]="ثبت نام با موفقیت انجام شد . آموزشگاه به زودی با شما تماس میگیرد";
-                        return RedirectToPage("/");
+                        return RedirectToPage("Index");
                         
                         case AddPreRegisterationResult.ExistUser:
                         TempData[SweetAlert_ErrorMessage]="شما قبلا ثبت نام کردید و امکان ثبت نام مجدد وجود ندارد";
-                        return Redirect("/");
+                        return Redirect("Index");
 
                 }
 

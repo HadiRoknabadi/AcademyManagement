@@ -22,6 +22,9 @@ namespace AcademyManagement.Persistence.Configs.PreRegisteration
             builder.Property(p => p.BookNameReadInEnglishClass).IsRequired(false).HasMaxLength(300);
 
             builder.Property(p => p.Description).IsRequired(false).HasMaxLength(300);
+
+            builder.HasQueryFilter(u=>EF.Property<bool>(u,"IsRemoved")==false);
+
         }
     }
 }
