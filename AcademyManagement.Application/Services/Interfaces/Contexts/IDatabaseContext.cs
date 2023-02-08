@@ -1,4 +1,5 @@
 ﻿using AcademyManagement.Domain.Entities.Account;
+using AcademyManagement.Domain.Entities.Lesson;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Application.Services.Interfaces.Contexts
@@ -9,6 +10,12 @@ namespace AcademyManagement.Application.Services.Interfaces.Contexts
         #region Account
 
         public DbSet<PreRegisteration> PreRegisterations { get; set; }
+
+        #endregion
+
+        #region Lesson
+
+        public DbSet<Lesson> Lessons { get; set; }
 
         #endregion
 

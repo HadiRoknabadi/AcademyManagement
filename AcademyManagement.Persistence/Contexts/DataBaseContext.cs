@@ -1,6 +1,8 @@
 ﻿using AcademyManagement.Application.Services.Interfaces.Contexts;
 using AcademyManagement.Domain.Attributes;
 using AcademyManagement.Domain.Entities.Account;
+using AcademyManagement.Domain.Entities.Lesson;
+using AcademyManagement.Persistence.Configs.Lesson;
 using AcademyManagement.Persistence.Configs.PreRegisteration;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,12 @@ namespace AcademyManagement.Persistence.Contexts
         #region Account
 
         public DbSet<PreRegisteration> PreRegisterations { get; set; }
+
+        #endregion
+
+        #region Lesson
+
+        public DbSet<Lesson> Lessons { get; set; }
 
         #endregion
 
@@ -47,6 +55,13 @@ namespace AcademyManagement.Persistence.Contexts
             #region Account
 
             modelBuilder.ApplyConfiguration(new PreRegisterationConfiguration());
+
+
+            #endregion
+
+            #region Lesson
+
+            modelBuilder.ApplyConfiguration(new LessonConfiguration());
 
 
             #endregion
