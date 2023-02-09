@@ -1,0 +1,192 @@
+@using AcademyManagement.Application.DTOs.Lesson
+@model FilterLessonDTO
+
+@{
+    ViewData["Title"] = "درس ها";
+}
+
+<div class="container margin-bottom-10">
+    <a data-toggle="modal" data-target="#addLesson" class="btn btn-success">افزودن درس</a>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form id="filter-form" asp-controller="PreRegisteration" asp-action="PreRegisterations" method="get">
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label>نام درس</label>
+                <input asp-for="LessonName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>تعداد فصل</label>
+                <input asp-for="SeasonCount" class="form-control">
+            </div>
+            <hr />
+            <h4>مرتب سازی</h4>
+            <div class="control-group">
+                @foreach (var item in Html.GetEnumSelectList<FilterLessonOrder>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.OrderBy)"
+                            @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.OrderBy) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <button type="submit" class="btn btn-success btn-block">فیلتر</button>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-md-8 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.Lessons != null && Model.Lessons.Any())
+        {
+            <div class="table-scrollable">
+
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>
+                                شناسه
+                            </th>
+                            <th>
+                                نام درس
+                            </th>
+                            <th>
+                                 تعداد فصل
+                            </th>
+                            <th>
+                                  لینک دانلود فایل درس
+                            </th>
+                            <th>
+                                دستورات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lesson in Model.Lessons)
+                        {
+                            <tr id="ajax-url-item-@lesson.Id">
+                                <td>
+                                    @lesson.Id
+                                </td>
+                                <td>
+                                    @lesson.Name
+                                </td>
+                                <td>
+                                    @lesson.Season_Count
+                                </td>
+                                <td>
+                                    @lesson.Lesson_File
+                                </td>
+                                <td>
+                                    <a asp-controller="Lesson" asp-action="EditLesson"
+                                asp-route-preRegisterationId="@lesson.Id"
+                                        class="btn btn-warning btn-xs">ویرایش</a>
+                                    <a asp-controller="Lesson" asp-action="DeleteLesson" asp-route-preRegisterationId="@lesson.Id"
+                                        ajax-url-button="@lesson.Id" class="btn btn-danger btn-xs">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        }
+        else
+        {
+            <Alert type="warning" message="هیچ اطلاعاتی یافت نشد"></Alert>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+    </div>
+</div>
+
+
+
+<!-- start Add Lesson Modal -->
+
+<div class="modal fade" id="addLesson" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">افزودن درس</h5>
+                <button type="button" class="close margin-top-minus-21" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+
+                    <form asp-controller="Role" asp-action="AddRole" method="post" asp-antiforgery="true"
+                        data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
+                        <partial name="_AddLesson" model="@(new AddOrEditLessonDTO{})" />
+                        <div class="custome-modal-footer">
+                            <button type="submit" class="btn btn-success pull-right">ثبت</button>
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">بستن</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end Add Lesson Modal -->
+
+@if(Model.Lessons!=null && Model.Lessons.Any())
+{
+    @foreach (var lesson in Model.Lessons)
+    {
+        <div class="modal fade" id="editRole-@lesson.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش درس</h5>
+                <button type="button" class="close margin-top-minus-21" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+
+                    <form asp-controller="Role" asp-action="EditRole" method="post" asp-antiforgery="true"
+                        data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
+                        <partial name="_EditLesson" model="@(new AddOrEditLessonDTO{})" />
+                        <div class="custome-modal-footer">
+                            <button type="submit" class="btn btn-success pull-right">ثبت</button>
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">بستن</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+    }
+}
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

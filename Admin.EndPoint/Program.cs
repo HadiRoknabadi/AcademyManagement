@@ -68,6 +68,7 @@ builder.Services.AddScoped<IDatabaseContext, DataBaseContext>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUploader, UploaderService>();
+builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IPreRegisterationService, PreRegisterationService>();
 
 

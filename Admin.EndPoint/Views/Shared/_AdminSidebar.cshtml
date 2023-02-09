@@ -9,7 +9,7 @@
     <ul class="nav sidebar-menu">
         <!--Dashboard-->
         <li class="@(requestedPath=="/Admin/Dashboard"?"active":"")">
-            <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Dashboard">
                 <i class="menu-icon glyphicon glyphicon-home"></i>
                 <span class="menu-text"> داشبورد </span>
             </a>
@@ -33,6 +33,12 @@
             <a asp-controller="PreRegisteration" asp-action="PreRegisterations">
                 <i class="menu-icon glyphicon glyphicon-bookmark"></i>
                 <span class="menu-text">پیش ثبت نامی ها</span>
+            </a>
+        </li>
+        <li class="@(requestedPath=="/Admin/Lessons"?"active":"")">
+            <a asp-controller="Lesson" asp-action="Lessons">
+                <i class="menu-icon glyphicon glyphicon-book"></i>
+                <span class="menu-text">درس ها</span>
             </a>
         </li>
 
