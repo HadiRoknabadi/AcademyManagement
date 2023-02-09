@@ -14,41 +14,82 @@ namespace StaticFile.EndPoint.Controllers
         #region Constructor
 
         private readonly IImageUploaderService _imageUploaderService;
+        private readonly IPdfUploaderService _pdfUploaderService;
 
-        public UploadController(IImageUploaderService imageUploaderService)
+        public UploadController(IImageUploaderService imageUploaderService, IPdfUploaderService pdfUploaderService)
         {
             _imageUploaderService = imageUploaderService;
+            _pdfUploaderService = pdfUploaderService;
         }
+
+
 
         #endregion
 
         [HttpPost]
-        public IActionResult Upload(string fileName,int? width,int?height,string? deleteFileName)
+        public IActionResult Upload(UploadFileType fileType, string fileName, int? width, int? height, string? deleteFileName)
         {
-            var image = Request.Form.Files[0];
-            if (_imageUploaderService.IsImage(image) == false) return BadRequest(new UploadResultDTO
+            switch (fileType)
             {
-                IsSuccess=false,
-                Message="تصویر انتخاب شده قابل بارگذاری نمی باشد"
-            });
+                case UploadFileType.Image:
+                    var image = Request.Form.Files[0];
+                    if (_imageUploaderService.IsImage(image) == false) return BadRequest(new UploadResultDTO
+                    {
+                        IsSuccess = false,
+                        Message = "فایل انتخاب شده قابل بارگذاری نمی باشد"
+                    });
 
-            if (string.IsNullOrEmpty(deleteFileName))
-            {
-                _imageUploaderService.AddImageToServer(image, fileName, PathExtension.UserAvatarOriginServer, width, height, PathExtension.UserAvatarThumbServer);
+                    if (string.IsNullOrEmpty(deleteFileName))
+                    {
+                        _imageUploaderService.AddImageToServer(image, fileName, PathExtension.UserAvatarOriginServer, width, height, PathExtension.UserAvatarThumbServer);
+
+                    }
+                    else
+                    {
+                        _imageUploaderService.AddImageToServer(image, fileName, PathExtension.UserAvatarOriginServer, width, height, PathExtension.UserAvatarThumbServer, deleteFileName);
+
+                    }
+                    return Ok(new UploadResultDTO
+                    {
+                        IsSuccess = true,
+                        Message = "فایل با موفقیت آپلود شد"
+                    });
+
+                case UploadFileType.PDF:
+                var pdf = Request.Form.Files[0];
+                    if (_pdfUploaderService.IsPdf(pdf) == false) return BadRequest(new UploadResultDTO
+                    {
+                        IsSuccess = false,
+                        Message = "فایل انتخاب شده قابل بارگذاری نمی باشد"
+                    });
+                    if (string.IsNullOrEmpty(deleteFileName))
+                    {
+                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLessonOriginServer);
+
+                    }
+                    else
+                    {
+                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLessonOriginServer, deleteFileName);
+
+                    }
+                    return Ok(new UploadResultDTO
+                    {
+                        IsSuccess = true,
+                        Message = "فایل با موفقیت آپلود شد"
+                    });
+
+                    default :
+                    return BadRequest(new UploadResultDTO
+                    {
+                        IsSuccess = false,
+                        Message = "خطایی رخ داد"
+                    });
 
             }
-            else
-            {
-                _imageUploaderService.AddImageToServer(image, fileName, PathExtension.UserAvatarOriginServer, width, height, PathExtension.UserAvatarThumbServer, deleteFileName);
 
-            }
 
-            return Ok(new UploadResultDTO
-            {
-                IsSuccess=true,
-                Message="تصویر با موفقیت آپلود شد"
-            });
+
         }
-        
+
     }
 }

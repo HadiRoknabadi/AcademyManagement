@@ -3,6 +3,7 @@ using AcademyManagement.Application.DTOs.Paging;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Application.Services.Interfaces.Contexts;
+using AcademyManagement.Application.DTOs.Common;
 using AcademyManagement.Domain.Entities.Account;
 using AutoMapper;
 using Khorshidkhanoom.Application.Generators;
@@ -170,7 +171,7 @@ namespace AcademyManagement.Application.Services.Implementations
             {
                 var imageName=Generator.GenerateUniqCode() + Path.GetExtension(addUserDTO.AvatarFile.FileName);
 
-                var res=await _uploader.UploadImage(addUserDTO.AvatarFile,imageName,43,43);
+                var res=await _uploader.UploadImage(UploadFileType.Image,addUserDTO.AvatarFile,imageName,43,43);
 
                 switch(res)
                 {
@@ -242,7 +243,7 @@ namespace AcademyManagement.Application.Services.Implementations
             {
                 var imageName=Generator.GenerateUniqCode() + Path.GetExtension(editUserDTO.AvatarFile.FileName);
 
-                var res=await _uploader.UploadImage(editUserDTO.AvatarFile,imageName,43,43,user.Avatar);
+                var res=await _uploader.UploadImage(UploadFileType.Image,editUserDTO.AvatarFile,imageName,43,43,user.Avatar);
 
                 switch(res)
                 {

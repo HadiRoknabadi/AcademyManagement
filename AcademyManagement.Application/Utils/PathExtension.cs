@@ -19,5 +19,10 @@
         public static string UserAvatarThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/UserAvatar/Thumb/");
 
         #endregion
+
+        #region  Lesson
+        public static string PdfLessonOrigin = StaticFileEndPointURL+"/Download/Lessons/Origin/";
+        public static string PdfLessonOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Download/Lessons/Origin/");
+        #endregion
     }
 }

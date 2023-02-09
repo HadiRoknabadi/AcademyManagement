@@ -130,7 +130,7 @@
 
                 <div class="form-group">
 
-                    <form asp-controller="Role" asp-action="AddRole" method="post" asp-antiforgery="true"
+                    <form asp-controller="Lesson" asp-action="AddLesson" method="post" asp-antiforgery="true"
                         data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
                         <partial name="_AddLesson" model="@(new AddOrEditLessonDTO{})" />
                         <div class="custome-modal-footer">
@@ -165,7 +165,7 @@
 
                 <div class="form-group">
 
-                    <form asp-controller="Role" asp-action="EditRole" method="post" asp-antiforgery="true"
+                    <form asp-controller="Lesson" asp-action="EditLesson" method="post" asp-antiforgery="true"
                         data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
                         <partial name="_EditLesson" model="@(new AddOrEditLessonDTO{})" />
                         <div class="custome-modal-footer">

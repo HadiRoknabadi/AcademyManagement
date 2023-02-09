@@ -8,11 +8,11 @@ namespace AcademyManagement.Application.Services.Implementations
 {
     public class UploaderService : IUploader
     {
-        public async Task<UploadResult> UploadImage(IFormFile image, string fileName, int? width, int? height, string? deletefileName)
+        public async Task<UploadResult> UploadImage(UploadFileType fileType,IFormFile image, string fileName, int? width, int? height, string? deletefileName)
         {
             var client = new RestClient(PathExtension.StaticFileEndPointURL);
             client.Timeout = -1;
-            var request = new RestRequest($"/api/upload?fileName={fileName}&width={width}&height={height}&deleteFileName={deletefileName}",Method.POST);
+            var request = new RestRequest($"/api/upload?fileType={fileType}&fileName={fileName}&width={width}&height={height}&deleteFileName={deletefileName}",Method.POST);
 
             byte[] bytes;
 
