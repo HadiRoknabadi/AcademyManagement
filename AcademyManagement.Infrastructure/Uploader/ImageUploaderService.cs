@@ -20,14 +20,7 @@ namespace AcademyManagement.Infrastructure.Uploader
 
                 if (!string.IsNullOrEmpty(deletefileName))
                 {
-                    if (File.Exists(orginalPath + deletefileName))
-                        File.Delete(orginalPath + deletefileName);
-
-                    if (!string.IsNullOrEmpty(thumbPath))
-                    {
-                        if (File.Exists(thumbPath + deletefileName))
-                            File.Delete(thumbPath + deletefileName);
-                    }
+                    DeleteImage(deletefileName, orginalPath, thumbPath);
                 }
 
                 string OriginPath = orginalPath + fileName;

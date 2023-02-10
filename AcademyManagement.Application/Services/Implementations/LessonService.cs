@@ -40,11 +40,11 @@ namespace AcademyManagement.Application.Services.Implementations
             switch (filter.OrderBy)
             {
                 case FilterLessonOrder.CreateDate_ASC:
-                    query = query.OrderBy(u=>EF.Property<DateTime>(u,"InsertTime"));
+                    query = query.OrderBy(u => EF.Property<DateTime>(u, "InsertTime"));
                     break;
 
                 case FilterLessonOrder.CreateDate_DES:
-                    query = query.OrderByDescending(u=>EF.Property<DateTime>(u,"InsertTime"));
+                    query = query.OrderByDescending(u => EF.Property<DateTime>(u, "InsertTime"));
                     break;
             }
 
@@ -55,8 +55,8 @@ namespace AcademyManagement.Application.Services.Implementations
             if (!string.IsNullOrEmpty(filter.LessonName))
                 query = query.Where(u => EF.Functions.Like(u.Name, $"%{filter.LessonName}%"));
 
-            if (filter.SeasonCount!=0)
-                query = query.Where(l=>l.Season_Count==filter.SeasonCount);
+            if (filter.SeasonCount != 0)
+                query = query.Where(l => l.Season_Count == filter.SeasonCount);
 
             #endregion
 
@@ -80,17 +80,17 @@ namespace AcademyManagement.Application.Services.Implementations
 
         public async Task<AddLessonResult> AddLesson(AddOrEditLessonDTO addLesson)
         {
-            if(await IsExistLessonByName(addLesson.Name)) return AddLessonResult.ExistLesson;
+            if (await IsExistLessonByName(addLesson.Name)) return AddLessonResult.ExistLesson;
 
-            var lesson=_mapper.Map<AddOrEditLessonDTO,Lesson>(addLesson);
+            var lesson = _mapper.Map<AddOrEditLessonDTO, Lesson>(addLesson);
 
-            if(addLesson.PdfFile!=null)
+            if (addLesson.PdfFile != null)
             {
-                var imageName=Generator.GenerateUniqCode() + Path.GetExtension(addLesson.PdfFile.FileName);
+                var imageName = Generator.GenerateUniqCode() + Path.GetExtension(addLesson.PdfFile.FileName);
 
-                var res=await _uploader.UploadPdf(UploadFileType.PDF,addLesson.PdfFile,imageName);
+                var res = await _uploader.UploadPdf(UploadFileType.PDF, addLesson.PdfFile, imageName);
 
-                switch(res)
+                switch (res)
                 {
                     case DTOs.Common.UploadResult.Success:
                         lesson.Lesson_File = imageName;
@@ -109,14 +109,60 @@ namespace AcademyManagement.Application.Services.Implementations
             return AddLessonResult.Success;
 
         }
-        
+
+
+        #endregion
+
+        #region Edit Lesson
+
+        public async Task<EditLessonResult> EditLesson(AddOrEditLessonDTO editLesson)
+        {
+            var lesson = await GetLessonById((int)editLesson.Id);
+
+            if (lesson == null) return EditLessonResult.NotFound;
+
+            if (lesson.Name != editLesson.Name && await IsExistLessonByName(editLesson.Name)) return EditLessonResult.ExistLesson;
+
+
+            if (editLesson.PdfFile != null)
+            {
+                var imageName = Generator.GenerateUniqCode() + Path.GetExtension(editLesson.PdfFile.FileName);
+
+                var res = await _uploader.UploadPdf(UploadFileType.PDF, editLesson.PdfFile, imageName,lesson.Lesson_File);
+
+                switch (res)
+                {
+                    case DTOs.Common.UploadResult.Success:
+                        lesson.Lesson_File = imageName;
+                        break;
+
+                    case DTOs.Common.UploadResult.CantUploadFile:
+                        return EditLessonResult.CantUploadFile;
+                }
+
+            }
+
+            var editedLesson = _mapper.Map<AddOrEditLessonDTO, Lesson>(editLesson, lesson);
+
+            _context.Lessons.Update(editedLesson);
+
+            await _context.SaveChangesAsync();
+
+            return EditLessonResult.Success;
+        }
 
         #endregion
 
         public async Task<bool> IsExistLessonByName(string name)
         {
-            return await _context.Lessons.AsQueryable().AsNoTracking().AnyAsync(l=>l.Name==name);
+            return await _context.Lessons.AsQueryable().AsNoTracking().AnyAsync(l => l.Name == name);
         }
+
+        public async Task<Lesson> GetLessonById(int lessonId)
+        {
+            return await _context.Lessons.AsQueryable().SingleOrDefaultAsync(l => l.Id == lessonId);
+        }
+
 
     }
 }

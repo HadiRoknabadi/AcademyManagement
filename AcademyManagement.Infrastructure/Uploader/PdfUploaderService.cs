@@ -16,7 +16,7 @@ namespace AcademyManagement.Infrastructure.Uploader
                 if (!string.IsNullOrEmpty(deletefileName))
                 {
                     
-                    DeletePdf(fileName,orginalPath);
+                    DeletePdf(deletefileName,orginalPath);
                 }
 
                 string OriginPath = orginalPath + fileName;

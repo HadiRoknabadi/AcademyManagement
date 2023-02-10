@@ -89,10 +89,9 @@
                                     <a href="@(PathExtension.PdfLesson+lesson.Lesson_File)" class="btn btn-success">دانلود</a>
                                 </td>
                                 <td>
-                                    <a asp-controller="Lesson" asp-action="EditLesson"
-                                asp-route-preRegisterationId="@lesson.Id"
+                                    <a data-toggle="modal" data-target="#editLesson-@lesson.Id"
                                         class="btn btn-warning btn-xs">ویرایش</a>
-                                    <a asp-controller="Lesson" asp-action="DeleteLesson" asp-route-preRegisterationId="@lesson.Id"
+                                    <a asp-controller="Lesson" asp-action="DeleteLesson" asp-route-lessonId="@lesson.Id"
                                         ajax-url-button="@lesson.Id" class="btn btn-danger btn-xs">حذف</a>
                                 </td>
                             </tr>
@@ -153,7 +152,7 @@
 {
     @foreach (var lesson in Model.Lessons)
     {
-        <div class="modal fade" id="editRole-@lesson.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editLesson-@lesson.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -168,7 +167,7 @@
 
                     <form asp-controller="Lesson" asp-action="EditLesson" method="post" asp-antiforgery="true" enctype="multipart/form-data"
                         data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
-                        <partial name="_EditLesson" model="@(new AddOrEditLessonDTO{})" />
+                        <partial name="_EditLesson" model="@(new AddOrEditLessonDTO{Id=lesson.Id,Name=lesson.Name,Season_Count=lesson.Season_Count})" />
                         <div class="custome-modal-footer">
                             <button type="submit" class="btn btn-success pull-right">ثبت</button>
                             <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">بستن</button>

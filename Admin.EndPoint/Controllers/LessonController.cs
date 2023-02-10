@@ -23,7 +23,7 @@ namespace Admin.EndPoint.Controllers
         [Route("Admin/Lessons")]
         public async Task<IActionResult> Lessons(FilterLessonDTO filter)
         {
-            var lessons=await _lessonService.FilterLessons(filter);
+            var lessons = await _lessonService.FilterLessons(filter);
             return View(lessons);
         }
 
@@ -45,7 +45,7 @@ namespace Admin.EndPoint.Controllers
                     case AddLessonResult.ExistLesson:
                         return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "نام درس وارد شده تکراری است", null);
 
-                     case AddLessonResult.CantUploadFile:
+                    case AddLessonResult.CantUploadFile:
                         return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "فایل انتخاب شده قابل بارگذاری نمی باشد", null);
 
                     case AddLessonResult.Success:
@@ -55,6 +55,39 @@ namespace Admin.EndPoint.Controllers
                 }
             }
             return View(addLessonDTO);
+        }
+
+        #endregion
+
+        #region  EDit Lesson
+
+        [Route("Admin/EditLesson")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLesson(AddOrEditLessonDTO editLessonDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = await _lessonService.EditLesson(editLessonDTO);
+
+                switch (res)
+                {
+                    case EditLessonResult.ExistLesson:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "نام درس وارد شده تکراری است", null);
+
+                    case EditLessonResult.NotFound:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "درسی با این مشخصات یافت نشد", null);
+
+                    case EditLessonResult.CantUploadFile:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "فایل انتخاب شده قابل بارگذاری نمی باشد", null);
+
+                    case EditLessonResult.Success:
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درس با موفقیت ویرایش شد", null);
+
+
+                }
+            }
+            return View(editLessonDTO);
         }
 
         #endregion
