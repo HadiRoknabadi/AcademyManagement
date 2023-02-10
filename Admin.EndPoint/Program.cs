@@ -8,7 +8,6 @@ using AcademyManagement.Persistence.Contexts;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -79,6 +78,7 @@ builder.Services.AddScoped<IPreRegisterationService, PreRegisterationService>();
 builder.Services.AddAutoMapper(typeof(PreRegisterationMappingProfile));
 builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 builder.Services.AddAutoMapper(typeof(RoleMappingProfile));
+builder.Services.AddAutoMapper(typeof(LessonMappingProfile));
 
 #endregion
 

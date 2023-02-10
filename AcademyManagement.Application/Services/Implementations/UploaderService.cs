@@ -29,8 +29,33 @@ namespace AcademyManagement.Application.Services.Implementations
 
             if (res.Data.IsSuccess) return UploadResult.Success;
 
-            return UploadResult.CantUploadImage;
+            return UploadResult.CantUploadFile;
            
         }
+
+        public async Task<UploadResult> UploadPdf(UploadFileType fileType,IFormFile pdf,string fileName,string deletefileName=null)
+        {
+            var client = new RestClient(PathExtension.StaticFileEndPointURL);
+            client.Timeout = -1;
+            var request = new RestRequest($"/api/upload?fileType={fileType}&fileName={fileName}&deleteFileName={deletefileName}",Method.POST);
+
+            byte[] bytes;
+
+            using(var ms =new MemoryStream())
+            {
+                await pdf.CopyToAsync(ms);
+                bytes=ms.ToArray();
+            }
+
+            request.AddFile(pdf.FileName, bytes, pdf.FileName, pdf.ContentType);
+
+
+            var res=client.Post<UploadResultDTO>(request);
+
+            if (res.Data.IsSuccess) return UploadResult.Success;
+
+            return UploadResult.CantUploadFile;
+        }
+
     }
 }

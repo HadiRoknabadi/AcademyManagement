@@ -64,12 +64,12 @@ namespace StaticFile.EndPoint.Controllers
                     });
                     if (string.IsNullOrEmpty(deleteFileName))
                     {
-                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLessonOriginServer);
+                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLesson);
 
                     }
                     else
                     {
-                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLessonOriginServer, deleteFileName);
+                        _pdfUploaderService.AddPdfToServer(pdf, fileName, PathExtension.PdfLessonServer, deleteFileName);
 
                     }
                     return Ok(new UploadResultDTO

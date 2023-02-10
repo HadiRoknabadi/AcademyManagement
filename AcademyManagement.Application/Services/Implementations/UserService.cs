@@ -2,13 +2,12 @@
 using AcademyManagement.Application.DTOs.Paging;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
-using AcademyManagement.Application.Services.Interfaces.Contexts;
 using AcademyManagement.Application.DTOs.Common;
 using AcademyManagement.Domain.Entities.Account;
 using AutoMapper;
-using Khorshidkhanoom.Application.Generators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AcademyManagement.Application.Generators;
 
 namespace AcademyManagement.Application.Services.Implementations
 {
@@ -179,7 +178,7 @@ namespace AcademyManagement.Application.Services.Implementations
                         user.Avatar = imageName;
                         break;
 
-                    case DTOs.Common.UploadResult.CantUploadImage:
+                    case DTOs.Common.UploadResult.CantUploadFile:
                         return AddUserResult.CantUploadAvatar;
                 }
 
@@ -251,7 +250,7 @@ namespace AcademyManagement.Application.Services.Implementations
                         editedUser.Avatar = imageName;
                         break;
 
-                    case DTOs.Common.UploadResult.CantUploadImage:
+                    case DTOs.Common.UploadResult.CantUploadFile:
                         return EditUserResult.CantUploadAvatar;
                 }
 

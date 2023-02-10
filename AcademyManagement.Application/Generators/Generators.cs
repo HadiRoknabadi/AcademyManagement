@@ -1,4 +1,4 @@
-namespace Khorshidkhanoom.Application.Generators
+namespace AcademyManagement.Application.Generators
 {
     public class Generator
     {

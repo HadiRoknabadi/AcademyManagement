@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AcademyManagement.Infrastructure\AcademyManagement.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 @using AcademyManagement.Application.DTOs.Lesson
+@using AcademyManagement.Application.Utils
 @model FilterLessonDTO
 
 @{
@@ -85,7 +86,7 @@
                                     @lesson.Season_Count
                                 </td>
                                 <td>
-                                    @lesson.Lesson_File
+                                    <a href="@(PathExtension.PdfLesson+lesson.Lesson_File)" class="btn btn-success">دانلود</a>
                                 </td>
                                 <td>
                                     <a asp-controller="Lesson" asp-action="EditLesson"
@@ -130,7 +131,7 @@
 
                 <div class="form-group">
 
-                    <form asp-controller="Lesson" asp-action="AddLesson" method="post" asp-antiforgery="true"
+                    <form asp-controller="Lesson" asp-action="AddLesson" method="post" asp-antiforgery="true" enctype="multipart/form-data"
                         data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
                         <partial name="_AddLesson" model="@(new AddOrEditLessonDTO{})" />
                         <div class="custome-modal-footer">
@@ -165,7 +166,7 @@
 
                 <div class="form-group">
 
-                    <form asp-controller="Lesson" asp-action="EditLesson" method="post" asp-antiforgery="true"
+                    <form asp-controller="Lesson" asp-action="EditLesson" method="post" asp-antiforgery="true" enctype="multipart/form-data"
                         data-method="post" data-ajax="true" data-ajax-success="OnSuccessAddOrEditItem">
                         <partial name="_EditLesson" model="@(new AddOrEditLessonDTO{})" />
                         <div class="custome-modal-footer">

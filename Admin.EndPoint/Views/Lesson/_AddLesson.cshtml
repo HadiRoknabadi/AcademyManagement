@@ -1,0 +1,14 @@
+@using AcademyManagement.Application.DTOs.Lesson
+@model AddOrEditLessonDTO
+
+
+<label>نام درس</label>
+<input asp-for="Name" class="form-control" placeholder="لطفا نام درس را وارد کنید">
+<span asp-validation-for="Name" class="text-danger"></span>
+
+<label>تعداد فصل</label>
+<input asp-for="Season_Count" class="form-control" placeholder="لطفا تعداد فصل درس را وارد کنید">
+<span asp-validation-for="Season_Count" class="text-danger"></span>
+
+<label>فایل درس</label>
+<input asp-for="PdfFile" type="file" class="form-control">

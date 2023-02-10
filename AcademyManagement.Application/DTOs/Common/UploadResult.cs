@@ -15,6 +15,6 @@ namespace AcademyManagement.Application.DTOs.Common
     public enum UploadResult
     {
         Success,
-        CantUploadImage
+        CantUploadFile
     }
 }

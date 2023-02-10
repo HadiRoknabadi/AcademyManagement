@@ -21,8 +21,8 @@
         #endregion
 
         #region  Lesson
-        public static string PdfLessonOrigin = StaticFileEndPointURL+"/Download/Lessons/Origin/";
-        public static string PdfLessonOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Download/Lessons/Origin/");
+        public static string PdfLesson = StaticFileEndPointURL+"/Download/Lessons/";
+        public static string PdfLessonServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Download/Lessons/");
         #endregion
     }
 }
