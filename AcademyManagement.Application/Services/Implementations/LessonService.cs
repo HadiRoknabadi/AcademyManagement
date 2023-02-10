@@ -153,6 +153,25 @@ namespace AcademyManagement.Application.Services.Implementations
 
         #endregion
 
+        #region Delete Lesson
+
+        public async Task<DeleteLessonResult> DeleteLesson(int lessonId)
+        {
+            var lesson=await GetLessonById(lessonId);
+
+            if(lesson==null) return DeleteLessonResult.NotFound;
+
+            _context.Lessons.Remove(lesson);
+            
+            await _context.SaveChangesAsync();
+
+            return DeleteLessonResult.Success;
+
+        }
+
+
+        #endregion
+
         public async Task<bool> IsExistLessonByName(string name)
         {
             return await _context.Lessons.AsQueryable().AsNoTracking().AnyAsync(l => l.Name == name);

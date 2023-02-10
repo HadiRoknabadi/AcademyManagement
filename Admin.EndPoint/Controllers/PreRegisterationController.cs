@@ -54,8 +54,7 @@ namespace Admin.EndPoint.Controllers
         [Route("Admin/DeletePreRegisteratin/{preRegisterationId}")]
         public async Task<IActionResult> DeletePreRegisteraton(int preRegisterationId)
         {
-            if (ModelState.IsValid)
-            {
+      
                 var res = await _preRegisterationService.DeletePreRegisteration(preRegisterationId);
 
                 switch (res)
@@ -69,7 +68,7 @@ namespace Admin.EndPoint.Controllers
 
 
                 }
-            }
+            
             return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "عملیات مورد نظر با خطا مواجه شد", null);
         }
 

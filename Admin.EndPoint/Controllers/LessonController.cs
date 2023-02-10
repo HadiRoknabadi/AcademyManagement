@@ -91,5 +91,29 @@ namespace Admin.EndPoint.Controllers
         }
 
         #endregion
+
+        #region Delete Lesson
+
+        [Route("Admin/DeleteLesson/{lessonId}")]
+        public async Task<IActionResult> DeleteLesson(int lessonId)
+        {
+            var res = await _lessonService.DeleteLesson(lessonId);
+
+            switch (res)
+            {
+                case DeleteLessonResult.NotFound:
+                    return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "درسی با این مشخصات یافت نشد", null);
+
+                case DeleteLessonResult.Success:
+                    return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درس با موفقیت حذف شد", null);
+
+
+            }
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "عملیات با خطا مواجه شد", null);
+
+
+        }
+
+        #endregion
     }
 }

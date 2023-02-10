@@ -17,13 +17,6 @@ namespace AcademyManagement.Application.DTOs.Lesson
         ExistLesson,
         CantUploadFile
     }
-
-    public enum DeleteLessonResult
-    {
-        Success,
-        NotFound
-    }
-
     public enum EditLessonResult
     {
         Success,
