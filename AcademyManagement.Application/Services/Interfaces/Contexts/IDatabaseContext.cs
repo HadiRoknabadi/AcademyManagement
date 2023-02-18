@@ -1,5 +1,6 @@
 ﻿using AcademyManagement.Domain.Entities.Account;
 using AcademyManagement.Domain.Entities.Lesson;
+using AcademyManagement.Domain.Entities.Term;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Application.Services.Interfaces.Contexts
@@ -16,6 +17,15 @@ namespace AcademyManagement.Application.Services.Interfaces.Contexts
         #region Lesson
 
         public DbSet<Lesson> Lessons { get; set; }
+
+        #endregion
+
+        #region Term
+
+        public DbSet<Term> Terms { get; set; }
+        public DbSet<TermUser> TermUsers { get; set; }
+        public DbSet<TermLesson> TermLessons { get; set; }
+
 
         #endregion
 

@@ -2,15 +2,17 @@
 using AcademyManagement.Domain.Attributes;
 using AcademyManagement.Domain.Entities.Account;
 using AcademyManagement.Domain.Entities.Lesson;
+using AcademyManagement.Domain.Entities.Term;
 using AcademyManagement.Persistence.Configs.Lesson;
 using AcademyManagement.Persistence.Configs.PreRegisteration;
+using AcademyManagement.Persistence.Configs.Term;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyManagement.Persistence.Contexts
 {
-    public class DataBaseContext:DbContext,IDatabaseContext
+    public class DataBaseContext : DbContext, IDatabaseContext
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options):base(options)
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
 
         }
@@ -28,6 +30,15 @@ namespace AcademyManagement.Persistence.Contexts
 
         #endregion
 
+        #region Term
+
+        public DbSet<Term> Terms { get; set; }
+        public DbSet<TermUser> TermUsers { get; set; }
+        public DbSet<TermLesson> TermLessons { get; set; }
+
+
+        #endregion
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,7 +47,7 @@ namespace AcademyManagement.Persistence.Contexts
 
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
-                if(entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute),true).Length > 0)
+                if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
                     builder.Entity(entityType.Name).Property<DateTime>("InsertTime");
                     builder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
@@ -44,7 +55,7 @@ namespace AcademyManagement.Persistence.Contexts
                     builder.Entity(entityType.Name).Property<bool>("IsRemoved");
                 }
             }
-            
+
 
             base.OnModelCreating(builder);
         }
@@ -65,10 +76,18 @@ namespace AcademyManagement.Persistence.Contexts
 
 
             #endregion
+
+            #region Term
+
+            modelBuilder.ApplyConfiguration(new TermConfiguration());
+            modelBuilder.ApplyConfiguration(new TermUserConfiguration());
+            modelBuilder.ApplyConfiguration(new TermLessonConfiguration());
+
+            #endregion
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-             var modifiedEntries = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted);
+            var modifiedEntries = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted);
 
             foreach (var entity in modifiedEntries)
             {
@@ -80,7 +99,7 @@ namespace AcademyManagement.Persistence.Contexts
                 var RemovedTime = entityType.FindProperty("RemovedTime");
 
 
-                if(entity.State==EntityState.Added && inserted!=null)
+                if (entity.State == EntityState.Added && inserted != null)
                 {
                     entity.Property("InsertTime").CurrentValue = DateTime.Now;
                 }
@@ -90,7 +109,7 @@ namespace AcademyManagement.Persistence.Contexts
                     entity.Property("UpdateTime").CurrentValue = DateTime.Now;
                 }
 
-                if (entity.State == EntityState.Deleted && RemovedTime != null && IsRemoved!=null)
+                if (entity.State == EntityState.Deleted && RemovedTime != null && IsRemoved != null)
                 {
                     entity.Property("RemovedTime").CurrentValue = DateTime.Now;
                     entity.Property("IsRemoved").CurrentValue = true;
