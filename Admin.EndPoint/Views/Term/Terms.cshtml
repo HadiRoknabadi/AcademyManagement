@@ -1,0 +1,87 @@
+@using AcademyManagement.Application.DTOs.Term
+@model FilterTermDTO
+
+@{
+    ViewData["Title"] = "ترم ها";
+}
+
+
+<div class="container margin-bottom-10">
+    <a asp-controller="Term" asp-action="AddTerm" class="btn btn-success">افزودن ترم</a>
+</div>
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form id="filter-form" asp-controller="Term" asp-action="Terms" method="get">
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label>نام ترم</label>
+                <input asp-for="Name" class="form-control">
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-success btn-block">فیلتر</button>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-md-8 col-sm-12 col-12 col-xs-12">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.Terms!= null && Model.Terms.Any())
+        {
+            <div class="table-scrollable">
+
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>
+                                شناسه
+                            </th>
+                            <th>
+                               نام ترم
+                            </th>
+                            <th>
+                                دستورات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var term in Model.Terms)
+                        {
+                            <tr id="ajax-url-item-@term.Id">
+                                <td>
+                                    @term.Id
+                                </td>
+                                <td>
+                                    @term.TermName
+                                </td>
+                                <td>
+                                    <a asp-controller="User" asp-action="EditUser" asp-route-userId="@term.Id"
+                                class="btn btn-warning btn-xs">ویرایش</a>
+                                    <a asp-controller="User" asp-action="DeleteUser"
+                                asp-route-userId="@term.Id" ajax-url-button="@term.Id"
+                                class="btn btn-danger btn-xs">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        
+
+        }
+        else
+        {
+            <Alert type="warning" message="هیچ اطلاعاتی یافت نشد"></Alert>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+    </div>
+</div>
