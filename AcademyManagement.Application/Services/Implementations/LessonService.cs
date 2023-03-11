@@ -182,6 +182,11 @@ namespace AcademyManagement.Application.Services.Implementations
             return await _context.Lessons.AsQueryable().SingleOrDefaultAsync(l => l.Id == lessonId);
         }
 
+        public async Task<List<Lesson>> FilterLessonsByName(string lessonName)
+        {
+            return await _context.Lessons.AsQueryable().AsNoTracking().Where(l=>EF.Functions.Like(l.Name,$"%{lessonName}%")).ToListAsync();
+        }
+
 
     }
 }

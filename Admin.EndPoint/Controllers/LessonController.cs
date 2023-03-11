@@ -115,5 +115,16 @@ namespace Admin.EndPoint.Controllers
         }
 
         #endregion
+
+        #region Get Lessons Json
+
+        [Route("Admin/GetLessonsJson")]
+        public async Task<IActionResult> GetLessonsJson(string lessonName)
+        {
+            var lessons=await _lessonService.FilterLessonsByName(lessonName);
+            return new JsonResult(lessons);
+        }
+
+        #endregion
     }
 }

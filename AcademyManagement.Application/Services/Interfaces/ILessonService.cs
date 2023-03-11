@@ -12,5 +12,6 @@ namespace AcademyManagement.Application.Services.Interfaces
         Task<EditLessonResult> EditLesson(AddOrEditLessonDTO editLesson);
         Task<DeleteLessonResult> DeleteLesson(int lessonId);
         Task<bool> IsExistLessonByName(string name);
+        Task<List<Lesson>> FilterLessonsByName(string lessonName);
     }
 }

@@ -247,6 +247,7 @@ namespace AcademyManagement.Application.Services.Implementations
                 switch(res)
                 {
                     case DTOs.Common.UploadResult.Success:
+
                         editedUser.Avatar = imageName;
                         break;
 

@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using AcademyManagement.Application.DTOs.Term;
 using AcademyManagement.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,16 @@ namespace Admin.EndPoint.Controllers
         {
             var terms=await _termService.FilterTerms(filter);
             return View(terms);
+        }
+
+        #endregion
+
+        #region Add Term
+
+        [Route("Admin/AddTerm")]
+        public IActionResult AddTerm()
+        {
+            return View();
         }
 
         #endregion

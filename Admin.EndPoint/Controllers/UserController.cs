@@ -1,3 +1,5 @@
+using System.Runtime.Serialization.Json;
+using System.Text.Json;
 using AcademyManagement.Application.DTOs.User;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Infrastructure.Http;
@@ -184,6 +186,17 @@ namespace Admin.EndPoint.Controllers
             }
             return JsonResponseStatus.SendStatus(JsonResponseStatusType.Error, "عملیات مورد نظر با خطا مواجه شد", null);
 
+        }
+
+        #endregion
+
+        #region Get Teachers Json
+
+        [Route("Admin/GetTeachersJson")]
+        public async Task<string> GetTeachersJson([FromServices]ITeacherService teacherService)
+        {
+            var teachers=await teacherService.GetTeachersForTerm();
+            return JsonSerializer.Serialize(teachers);
         }
 
         #endregion

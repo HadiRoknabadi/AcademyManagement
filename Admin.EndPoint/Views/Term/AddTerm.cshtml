@@ -1,0 +1,77 @@
+@model AcademyManagement.Application.DTOs.Term.AddTermDTO
+
+@{
+    ViewData["Title"] = "افزودن ترم";
+}
+
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-blue">
+            <span class="widget-caption">@ViewData["Title"]</span>
+        </div>
+        <div class="widget-body">
+            <div>
+                <form asp-controller="Term"
+                    asp-action="AddTerm" id="add-term">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>نام ترم</label>
+                                <input asp-for="TermName" class="form-control">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>تاریخ شروع ترم</label>
+                                <input asp-for="Start_Date" class="form-control">
+                                <span asp-validation-for="Start_Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>تاریخ پایان ترم</label>
+                                <input asp-for="End_Date" class="form-control">
+                                <span asp-validation-for="End_Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>نام درس</label>
+                                <input id="LessonName" class="form-control">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="term-details">
+
+                    </div>
+  
+                    <hr class="wide" />
+                    <button type="submit" class="btn btn-success">ثبت اطلاعات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles
+{
+<link rel="stylesheet" href="/lib/Date-Picker/kamadatepicker.min.css">
+<link rel="stylesheet" href="/lib/EasyAutocomplete/easy-autocomplete.min.css">
+}
+
+@section Scripts{
+
+<script src="/lib/Date-Picker/kamadatepicker.min.js"></script>
+<script src="/lib/EasyAutocomplete/jquery.easy-autocomplete.min.js"></script>
+<script>
+    CreateDatePicker("Start_Date");
+    CreateDatePicker('End_Date'); 
+   createAutoCompleteForTerm('AddTerm');
+</script>
+
+}

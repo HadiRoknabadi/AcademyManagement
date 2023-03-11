@@ -69,6 +69,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUploader, UploaderService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ITermService, TermService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IPreRegisterationService, PreRegisterationService>();
 
 

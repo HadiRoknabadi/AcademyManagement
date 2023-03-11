@@ -24,8 +24,7 @@ $(document).ready(function () {
             $(editors).each(function (index, value) {
 
                 var id = $(value).attr('ckeditor');
-                ClassicEditor.create(document.querySelector('[ckeditor="' + id + '"]'),
-                    {
+                ClassicEditor.create(document.querySelector('[ckeditor="' + id + '"]'), {
 
 
                         language: 'fa',
@@ -89,8 +88,7 @@ function ImagePreview(imageId, imagePreviewId = 0) {
             // get loaded data and render thumbnail.
             if (imagePreviewId == 0) {
                 document.getElementById("ImagePreview").src = e.target.result;
-            }
-            else {
+            } else {
                 document.getElementById(imagePreviewId).src = e.target.result;
             }
 
@@ -100,6 +98,7 @@ function ImagePreview(imageId, imagePreviewId = 0) {
         reader.readAsDataURL(this.files[0]);
     };
 }
+
 function ShowMessage(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
@@ -144,8 +143,7 @@ $('[ajax-url-button]').on('click', function (e) {
                             if (IsHide == true || IsHide == null) {
                                 $('#ajax-url-item-' + itemId).hide(1500);
 
-                            }
-                            else {
+                            } else {
                                 location.reload();
                             }
                             break;
@@ -181,7 +179,9 @@ function OnSuccessAddOrEditItem(res) {
         case 'Success':
             ShowMessage('اعلان موفقیت', res.message);
             $('.close').click();
-            setTimeout(function () { location.reload(); }, 2000)
+            setTimeout(function () {
+                location.reload();
+            }, 2000)
             break;
 
         case 'Error':
@@ -195,191 +195,25 @@ function OnSuccessAddOrEditItem(res) {
     }
 }
 
-/****** start product scripts ******/
-
-$("[main_category_checkbox]").on('change', function (e) {
-
-    isChecked = $(this).is(':checked');
-    var selectedCategoryId = $(this).attr('main_category_checkbox');
 
 
-    if (isChecked) {
+function createAutoCompleteForTerm(state) {
+    var teachers = [];
+    $.get("/Admin/GetTeachersJson", function (res) {
 
-        $('#sub_categories_' + selectedCategoryId).slideDown(300);
-
-    }
-    else {
-
-        $('#sub_categories_' + selectedCategoryId).slideUp(300);
-        var subCategories = $('[parent-category-id="' + selectedCategoryId + '"]');
-        $('[parent-category-id="' + selectedCategoryId + '"]').prop('checked', false);
-    }
-});
+        teachers.push(JSON.parse(res));
 
 
-$("#add_color_btn").on('click', function (e) {
-    e.preventDefault();
-
-
-    var colorName = $("#product_color_name_input").val();
-
-    var colorCode = $("#product_color_code_input").val();
-
-    var colorPrice = $("#product_color_price_input").val();
-
-
-    if (colorName == '') {
-        ShowMessage('اخطار', 'لطفا نام رنگ را وارد کنید', 'warning');
-        return;
-    }
-
-    if (colorCode == '') {
-        ShowMessage('اخطار', 'لطفا کد رنگ را وارد کنید', 'warning');
-        return;
-    }
-
-    if (colorPrice == '') {
-        ShowMessage('اخطار', 'لطفا قیمت رنگ را وارد کنید', 'warning');
-        return;
-    }
-
-
-    var index = $('#list_of_product_colors tr').length;
-
-    var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
-    if (isExistsSelectedColor.length === 0) {
-
-        var colorNameNode = `<input type="hidden" value="${colorName}" name="ProductColors[${index}].colorName" color-name-hidden-input="${colorName}-${colorPrice}" />`;
-        var colorCodeNode = `<input type="hidden" value="${colorCode}" name="ProductColors[${index}].colorCode" color-code-hidden-input="${colorName}-${colorPrice}"  />`;
-        var colorPriceNode = `<input type="hidden" value="${colorPrice}" name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}"  />`;
-    
-        $("#ProductForm").append(colorNameNode);
-        $("#ProductForm").append(colorCodeNode);
-        $("#ProductForm").append(colorPriceNode);
-    
-    
-        var colorTableNode = `<tr color-table-item="${colorName}-${colorPrice}"> <td>${colorName}</td> <td> <div style="margin:0 auto;background-color:${colorCode};border-radius:100%;width:25px;height:25px">&nbsp</div> </td> <td>${colorPrice}</td> <td> <a class="btn btn-danger" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td> </tr>`;
-    
-        $("#list_of_product_colors").append(colorTableNode);
-    
-        $("#product_color_name_input").val('');
-    
-        $("#product_color_code_input").val('');
-    
-        $("#product_color_price_input").val('');
-    }
-    else{
-        ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
-        $('#product_color_name_input').val('').focus();
-    }
-
-
-
-
-});
-
-
-$("#add_feature_btn").on('click', function (e) {
-    e.preventDefault();
-
-
-    var feature = $("#product_feature_input").val();
-
-    var featureValue = $("#product_feature_value_input").val();
-
-
-    if (feature == '') {
-        ShowMessage('اخطار', 'لطفا نام ویژگی را وارد کنید', 'warning');
-        return;
-    }
-
-    if (featureValue == '') {
-        ShowMessage('اخطار', 'لطفا مقدار ویژگی را وارد کنید', 'warning');
-        return;
-    }
-
-    var currentFeaturesCount = $('#list_of_product_features tr');
-    var index = currentFeaturesCount.length;
-
-    var isExistSelectedFeature = $('[feature-hidden-input][value="' + feature + '"]');
-    if (isExistSelectedFeature.length === 0) {
-        var featureNode = `<input type="hidden" value="${feature}" name="ProductFeatures[${index}].FeatureTitle" feature-hidden-input="${feature}-${featureValue}" />`;
-        var featureValueNode = `<input type="hidden" value="${featureValue}" name="ProductFeatures[${index}].FeatureValue" feature-value-hidden-input="${feature}-${featureValue}"  />`;
-
-        $("#ProductForm").append(featureNode);
-        $("#ProductForm").append(featureValueNode);
-
-
-        var featureTableNode = `<tr feature-table-item="${feature}-${featureValue}"> <td>${feature}</td> <td>${featureValue}</td> <td> <a class="btn btn-danger" onclick="removeProductFeature('${feature}-${featureValue}')">حذف</a> </td> </tr>`;
-
-        $("#list_of_product_features").append(featureTableNode);
-
-        $("#product_feature_input").val('');
-
-        $("#product_feature_value_input").val('');
-
-    }
-    else {
-        ShowMessage('اخطار', 'نام ویژگی وارد شده تکراری است', 'warning');
-
-    }
-
-
-
-})
-
-function removeProductFeature(index) {
-    $('[feature-hidden-input="' + index + '"]').remove();
-    $('[feature-value-hidden-input="' + index + '"]').remove();
-    $('[feature-table-item="' + index + '"]').remove();
-    reOrderProductFeatureHiddenInputs();
-}
-
-
-function removeProductColor(index) {
-    $('[color-name-hidden-input="' + index + '"]').remove();
-    $('[color-price-hidden-input="' + index + '"]').remove();
-    $('[color-code-hidden-input="' + index + '"]').remove();
-    $('[color-table-item="' + index + '"]').remove();
-    reOrderProductColorHiddenInputs();
-}
-
-
-function reOrderProductColorHiddenInputs() {
-    var hiddenColors = $('[color-name-hidden-input]');
-    $.each(hiddenColors, function (index, value) {
-        var hiddenColor = $(value);
-        var colorId = $(value).attr('color-name-hidden-input');
-        var hiddenPrice = $('[color-price-hidden-input="' + colorId + '"]');
-        var hiddenCode = $('[color-code-hidden-input="' + colorId + '"]');
-        $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName');
-        $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
-        $(hiddenCode).attr('name', 'ProductColors[' + index + '].ColorCode');
     });
-}
-
-
-function reOrderProductFeatureHiddenInputs() {
-    var hiddenFeatures = $('[feature-hidden-input]');
-    $.each(hiddenFeatures, function (index, value) {
-        var hiddenFeature = $(value);
-        var featureId = $(value).attr('feature-hidden-input');
-        var featureValue = $('[feature-value-hidden-input="' + featureId + '"]');
-        $(hiddenFeature).attr('name', 'ProductFeatures[' + index + '].FeatureTitle');
-        $(featureValue).attr('name', 'ProductFeatures[' + index + '].FeatureValue');
-    });
-}
-
-
-
-function createAutoCompleteForProductDiscount(state) {
+    console.log(teachers);
     var options = {
 
         url: function (phrase) {
-            return "/Admin/Products-autocomplete?productName=" + phrase;
+            return "/Admin/GetLessonsJson?lessonName=" + phrase;
+
         },
 
-        getValue: "title",
+        getValue: "name",
 
         list: {
             match: {
@@ -387,34 +221,60 @@ function createAutoCompleteForProductDiscount(state) {
             },
 
             onChooseEvent: function () {
-                var value = $("#ProductName").getSelectedItemData().id;
+                var value = $("#LessonName").getSelectedItemData().id;
 
-                if (state === 'AddProductDiscount') {
-                    var isExistSelectedProduct = $('[selected-product][value="' + value + '"]');
-                    if (isExistSelectedProduct.length === 0) {
-                        var productName = $("#ProductName").getSelectedItemData().title;
-                        var productIdNode = `<input name="ProductIds" selected-product="${value}" type="hidden" value="${value}" />`;
-
-                        $('#addProductDiscountForm').append(productIdNode);
+                if (state === 'AddTerm') {
+                    var isExistSelectedLesson = $('[selected-lesson][value="' + value + '"]');
 
 
-                        var selectedProductTagNode = `<span selected-product="${value}" class="tag label label-info margin-right-5 margin-top-5"> ${productName} <span class="cursor-pointer" onclick="removeSelectedProduct('${value}')"><i class="fa fa-close"></i></span></span>`;
+                    if (isExistSelectedLesson.length === 0) {
+                        var lessonName = $("#LessonName").getSelectedItemData().name;
+                        var lessonIdNode = `<input name="LessonIds" selected-lesson="${value}" type="hidden" value="${value}" />`;
 
-                        $('#selected-products').append(selectedProductTagNode);
+                        $('#add-term').append(lessonIdNode);
 
-                        $("#ProductName").val('');
-                        $("#ProductName").focus();
+
+                        var randomNumber = Math.random();
+                        var selectedLessonTagNode = `<row>
+                        <div class="col-sm-6">
+                        <div class="form-group">
+                        <label>درس انتخاب شده</label>
+                        <input class="form-control" value="${lessonName}" disabled/>
+                        <span class="text-danger"></span>
+                        </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>مدرس درس</label>
+                                <select class="form-control" selection-id="${randomNumber}">
+                                <option value="0">لطفا مدرس را انتخاب کنید</option>
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        </row>`;
+
+                        $('#term-details').append(selectedLessonTagNode);
+
+                        if (teachers.length > 0) {
+                            for (var i = 0; i < teachers.length; i++) {
+                                var selectListNode = `<option value="${teachers[0][i].Id}">${teachers[0][i].FullName}</option>`;
+                                console.log(selectListNode);
+                                $('[selection-id="' + randomNumber + '"]').append(selectListNode);
+                                console.log('ok');
+                            }
+                        }
+                        $("#LessonName").val('');
+                        $("#LessonName").focus();
+
+                    } else {
+                        ShowMessage('اخطار', 'درس انتخاب شده تکراری است', 'warning');
+                        $("#LessonName").val('');
+                        $("#LessonName").focus();
 
                     }
-                    else {
-                        ShowMessage('اخطار', 'محصول انتخاب شده تکراری است', 'warning');
-                        $("#ProductName").val('');
-                        $("#ProductName").focus();
-
-                    }
-                }
-                else {
-                    $('#ProductId').val(value);
+                } else {
+                    $('#LessonId').val(value);
                 }
 
 
@@ -427,27 +287,31 @@ function createAutoCompleteForProductDiscount(state) {
         theme: "square"
     };
 
-    $("#ProductName").easyAutocomplete(options);
+    $("#LessonName").easyAutocomplete(options);
 
 
 
 
 }
-function removeSelectedProduct(selectedProductNumber) {
-    $('[selected-product="' + selectedProductNumber + '"]').remove();
-}
+
 
 function CreateDatePicker(inputId) {
-    kamaDatepicker(inputId, { placeholder: "1400/01/01", buttonsColor: "red", forceFarsiDigits: true, markToday: true, markHolidays: true });
+    kamaDatepicker(inputId, {
+        placeholder: "1400/01/01",
+        buttonsColor: "red",
+        forceFarsiDigits: true,
+        markToday: true,
+        markHolidays: true
+    });
 
 }
 
-function CheckImageIsNull(formId,btnSubmitId, fileInputId,name) {
-    $("#" + btnSubmitId).on('click',function () {
+function CheckImageIsNull(formId, btnSubmitId, fileInputId, name) {
+    $("#" + btnSubmitId).on('click', function () {
 
-        var fileInput=$("#" + fileInputId).val();
-        if (fileInput==''){
-            ShowMessage('اخطار',`لطفا تصویری را برای ${name} انتخاب کنید`,'warning');
+        var fileInput = $("#" + fileInputId).val();
+        if (fileInput == '') {
+            ShowMessage('اخطار', `لطفا تصویری را برای ${name} انتخاب کنید`, 'warning');
             return false;
         }
 
@@ -456,58 +320,4 @@ function CheckImageIsNull(formId,btnSubmitId, fileInputId,name) {
 
     });
 
-}
-
-
-
-/****** end product scripts ******/
-
-function ConfirmOrder(orderId)
-{
-    var url='/Admin/ConfirmOrder/'+orderId;
-    swal({
-        title: 'اخطار',
-        text: "آیا از انجام عملیات مورد نظر اطمینان دارید؟",
-        icon: "warning",
-        buttons: {
-            catch: {
-                text: "بله",
-                value: "catch",
-            },
-            cancel: "خیر",
-
-        },
-    }).then((value) => {
-        switch (value) {
-            case "catch":
-                $.get(url).then(result => {
-                    switch (result.status) {
-                        case "Success":
-                            ShowMessage('موفقیت', result.message);
-                            $('#btn-confirm-order').hide(1500);
-                            break;
-
-                        case "Warning":
-                            ShowMessage('خطا', result.message, 'warning');
-                            break;
-
-                        case "Error":
-                            ShowMessage('خطا', result.message, 'error');
-                            break;
-
-                    }
-
-                });
-                break;
-            default:
-                swal({
-                    title: 'پیغام',
-                    text: 'عملیات لغو شد',
-                    icon: "error",
-                    buttons: 'بسیارخوب'
-                });
-                break;
-
-        }
-    });
 }
