@@ -130,6 +130,7 @@ ul {
     margin-bottom: 20px;
     font-weight: 500;
 }
+
 .list-style-none li {
     list-style: none;
 }
@@ -223,9 +224,7 @@ ul {
 .font-size-15 {
     font-size: 15px;
 }
-.font-size-18{
-    font-size: 18px;
-}
+
 .font-size-20 {
     font-size: 20px;
 }
@@ -251,8 +250,4 @@ ul {
     white-space: pre-wrap;
     background-color: transparent;
     border-radius: 0;
-}
-
-.vertical-align-middle{
-    vertical-align: middle;
 }
