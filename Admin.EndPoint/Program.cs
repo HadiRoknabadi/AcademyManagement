@@ -1,5 +1,4 @@
 using AcademyManagement.Application.DTOs.Role;
-using AcademyManagement.Application.DTOs.Term;
 using AcademyManagement.Application.Services.Implementations;
 using AcademyManagement.Application.Services.Interfaces;
 using AcademyManagement.Application.Services.Interfaces.Contexts;
@@ -57,7 +56,6 @@ builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddTransient<IValidator<AddUserDTO>, AddUserDTOValidator>();
 builder.Services.AddTransient<IValidator<AddOrEditRoleDTO>, AddOrEditRoleDTOValidator>();
-builder.Services.AddTransient<IValidator<AddTermDTO>, AddTermDTOValidator>();
 
 
 
