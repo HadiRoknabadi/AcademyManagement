@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label>نام ترم</label>
                                 <input asp-for="TermName" class="form-control">
-                                <span class="text-danger"></span>
+                                 <span class="text-danger" span asp-validation-for="TermName"></span>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -65,7 +65,9 @@
 }
 
 @section Scripts{
-
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 <script src="/lib/Date-Picker/kamadatepicker.min.js"></script>
 <script src="/lib/EasyAutocomplete/jquery.easy-autocomplete.min.js"></script>
 <script>

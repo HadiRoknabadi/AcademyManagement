@@ -37,6 +37,17 @@ namespace Admin.EndPoint.Controllers
             return View();
         }
 
+        [Route("Admin/AddTerm")]
+        [HttpPost]
+        public IActionResult AddTerm(AddTermDTO addTermDTO)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View(addTermDTO);
+        }
+
         #endregion
     }
 }
