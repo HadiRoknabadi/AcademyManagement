@@ -41,7 +41,7 @@ bld/
 #VsCode Folder
 .vscode/
 
-#Static Files
+#Static Files Images And Pdf
 StaticFile.EndPoint/wwwwroot/images/*
 StaticFile.EndPoint/wwwwroot/Download/*
 
