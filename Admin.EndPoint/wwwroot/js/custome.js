@@ -205,7 +205,6 @@ function createAutoCompleteForTerm(state) {
 
 
     });
-    console.log(teachers);
     var options = {
 
         url: function (phrase) {
@@ -235,8 +234,13 @@ function createAutoCompleteForTerm(state) {
 
 
                         var randomNumber = Math.random();
-                        var selectedLessonTagNode = `<row>
-                        <div class="col-sm-6">
+                        var selectedLessonTagNode = `<div section-id="${randomNumber}"><row>
+                        <div class="col-sm-1">
+                        <span class="text-danger font-size-18 cursor-pointer" onclick="DeleteTermLessonAndTeacher('${randomNumber}','${value}')">
+                        <i class="fa fa-close vertical-align-middle"></i>
+                        </span>
+                        </div>
+                        <div class="col-sm-5">
                         <div class="form-group">
                         <label>درس انتخاب شده</label>
                         <input class="form-control" value="${lessonName}" disabled/>
@@ -246,22 +250,20 @@ function createAutoCompleteForTerm(state) {
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>مدرس درس</label>
-                                <select class="form-control" selection-id="${randomNumber}">
+                                <select class="form-control" teacher-section-id="${randomNumber}">
                                 <option value="0">لطفا مدرس را انتخاب کنید</option>
                                 </select>
                                 <span class="text-danger"></span>
                             </div>
                         </div>
-                        </row>`;
+                        </row></div>`;
 
                         $('#term-details').append(selectedLessonTagNode);
 
                         if (teachers.length > 0) {
                             for (var i = 0; i < teachers.length; i++) {
                                 var selectListNode = `<option value="${teachers[0][i].Id}">${teachers[0][i].FullName}</option>`;
-                                console.log(selectListNode);
-                                $('[selection-id="' + randomNumber + '"]').append(selectListNode);
-                                console.log('ok');
+                                $('[teacher-section-id="' + randomNumber + '"]').append(selectListNode);
                             }
                         }
                         $("#LessonName").val('');
@@ -289,6 +291,43 @@ function createAutoCompleteForTerm(state) {
 
     $("#LessonName").easyAutocomplete(options);
 
+
+
+
+}
+
+function DeleteTermLessonAndTeacher(sectionId, lessonId) {
+
+    swal({
+        title: 'اخطار',
+        text: "آیا از انجام عملیات مورد نظر اطمینان دارید؟",
+        icon: "warning",
+        buttons: {
+            catch: {
+                text: "بله",
+                value: "catch",
+            },
+            cancel: "خیر",
+
+        },
+    }).then((value) => {
+        switch (value) {
+            case "catch":
+                $('[section-id="' + sectionId + '"]').remove();
+                $('[selected-lesson="' + lessonId + '"]').remove();
+                ShowMessage('موفقیت', 'عملیات با موفقیت انجام شد','success');
+                break;
+            default:
+                swal({
+                    title: 'پیغام',
+                    text: 'عملیات لغو شد',
+                    icon: "error",
+                    buttons: 'بسیارخوب'
+                });
+                break;
+
+        }
+    });
 
 
 
