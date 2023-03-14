@@ -205,7 +205,6 @@ function createAutoCompleteForTerm(state) {
 
 
     });
-    console.log(teachers);
     var options = {
 
         url: function (phrase) {
@@ -259,9 +258,7 @@ function createAutoCompleteForTerm(state) {
                         if (teachers.length > 0) {
                             for (var i = 0; i < teachers.length; i++) {
                                 var selectListNode = `<option value="${teachers[0][i].Id}">${teachers[0][i].FullName}</option>`;
-                                console.log(selectListNode);
                                 $('[selection-id="' + randomNumber + '"]').append(selectListNode);
-                                console.log('ok');
                             }
                         }
                         $("#LessonName").val('');
@@ -291,6 +288,35 @@ function createAutoCompleteForTerm(state) {
 
 
 
+
+}
+
+$('#addTermBtn').on('click', function (e) {
+    e.preventDefault();
+
+    var selectlists = $('[selection-id]');
+    if (selectlists.length > 0) {
+        for (var i = 0; i < selectlists.length; i++) {
+            if (selectlists[i].value == 0) {
+                selectlists[i].classList.add("border-1px-solid-red");
+                ShowMessage('اخطار', 'لطفا مدرسی برای درس انتخاب شده مشخص کنید', 'warning');
+
+            }
+
+            selectlists[i].onchange =function(){TeacherSelectListOnChange(this)};
+
+
+        }
+
+
+    }
+
+});
+
+function TeacherSelectListOnChange(element) {
+    var selectionId=element.attributes[1].value;
+
+    $('[selection-id="' + selectionId + '"]').removeClass("border-1px-solid-red");
 
 }
 

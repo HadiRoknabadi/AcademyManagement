@@ -134,7 +134,9 @@ ul {
 .list-style-none li {
     list-style: none;
 }
-
+.border-1px-solid-red{
+    border: 1px solid #ff0000;
+}
 .cursor-pointer {
     cursor: pointer;
 }
